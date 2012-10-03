@@ -6,8 +6,9 @@ class ValueBuffer
     # hash = {input}
     BUFFER << input #hash possible
     while BUFFER.size > MAX_BUFFER_SIZE
-      BUFFER.drop(0) #drop first packets until buffer size <= 10
-    end 
+      BUFFER.delete_at(0) #drop first packets until buffer size <= 10
+    end
+    return BUFFER
   end
   
   def self.size
@@ -16,7 +17,7 @@ class ValueBuffer
   
   def self.get
     if BUFFER.size > 0
-      return BUFFER.delete(0)
+      return BUFFER.delete_at(0)
     else
       return nil
     end
