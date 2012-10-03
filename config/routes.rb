@@ -1,9 +1,13 @@
 PollingTest::Application.routes.draw do
   
-  resource :main do
-    get :index
+  resources :sensors do
+    collection do
+      get :index
+      get :start
+      get :stop
+    end
   end
   
-  root :to => "main#index"
+  root :to => "sensors#index"
 
 end
