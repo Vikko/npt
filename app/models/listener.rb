@@ -1,6 +1,5 @@
 class Listener
   
-  after_initialize :listen
   attr_accessor :read, :delay, :buffer
   
   def initialize
@@ -9,6 +8,7 @@ class Listener
     input = File.open("/tmp/pipe", "r+")
     @buffer = ValueBuffer.new
     return @buffer
+    listen
   end
   
   def listen
