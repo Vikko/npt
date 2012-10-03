@@ -7,7 +7,7 @@ class ValueBuffer
   end  
   
   def add(input)
-    # hash = {input}
+    # hash = {parse(input)}
     @array << input #hash possible
     while @array.size > @max_array_size
       @array.delete_at(0) #drop first packets until buffer size <= 10
@@ -17,6 +17,10 @@ class ValueBuffer
   
   def size
     return @array.size
+  end
+
+  def dc_component
+    @array.inject(:+).to_f / @max_array_size
   end
   
   def get
