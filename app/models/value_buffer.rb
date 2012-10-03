@@ -6,7 +6,7 @@ class ValueBuffer
     @max_array_size = 5
   end  
   
-  def self.add(input)
+  def add(input)
     # hash = {input}
     @array << input #hash possible
     while @array.size > @max_array_size
@@ -15,11 +15,11 @@ class ValueBuffer
     return @array
   end
   
-  def self.size
+  def size
     return @array.size
   end
   
-  def self.get
+  def get
     if @array.size > 0
       return @array.delete_at(0)
     else
