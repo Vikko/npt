@@ -1,3 +1,8 @@
 index
 <br/>
 listener: <%= @listener.inspect %>
+
+<p>
+<%= link_to "Start", {:action => :start}, :remote => true %>
+<%= link_to "Stop", {:action => :stop}, :remote => true %>
+</p>

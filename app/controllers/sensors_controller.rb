@@ -11,7 +11,6 @@ class SensorsController < ApplicationController
     end
     @listener = @@listener
     @buffer = @@buffer
-    @started = @@started
   end
 
   def start
@@ -26,6 +25,11 @@ class SensorsController < ApplicationController
   
   def stop
     @@listener.read = 0
+  end
+  
+  def update 
+    @buffer = @@buffer
+    @listener = @@listener
   end
   
 end
