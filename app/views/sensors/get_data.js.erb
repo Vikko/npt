@@ -1,0 +1,6 @@
+$("#data").html("<%= escape_javascript(render :partial => 'data') %>");
+<% if @listener && @listener.read %>
+polling = true;
+<% else %>
+polling = false;
+<% end %>

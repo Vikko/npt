@@ -1,8 +1,30 @@
 index
 <br/>
-listener: <%= @listener.inspect %>
+
+<div id="data">
+<%= render :partial => "data" %>
+</div>
 
 <p>
 <%= link_to "Start", {:action => :start}, :remote => true %>
 <%= link_to "Stop", {:action => :stop}, :remote => true %>
 </p>
+
+<script type="text/javascript">
+polling = false;
+$(document).ready(function($){
+
+	setInterval(function(){
+		if (polling == true) {
+			get_data();
+		}
+	}, 20);
+});
+function get_data() {
+	$.ajax({
+		url: "<%= url_for :action => :get_data %>",
+		dataType: "script" 
+	});
+}
+
+</script>

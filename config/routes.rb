@@ -5,6 +5,7 @@ PollingTest::Application.routes.draw do
       get :index
       get :start
       get :stop
+      get :get_data
     end
   end
   

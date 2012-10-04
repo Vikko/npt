@@ -1,7 +1,6 @@
 class SensorsController < ApplicationController
 
   @@listener = nil
-  @@started = false
   @@buffer = nil
   
 
@@ -9,27 +8,28 @@ class SensorsController < ApplicationController
     if @@listener.blank? 
       # start
     end
-    @listener = @@listener
-    @buffer = @@buffer
+    get_data
   end
 
   def start
-    if @@started == false
-      @@started = true
+    if @@listener == nil
       @@listener = Listener.new
       @@buffer = @@listener.buffer    
     end
-    @@listener.read = 1
-    @@listener.listen
+    if @@listener.read != 1
+      @@listener.listen
+      @@listener.read = 1
+    end
   end
   
   def stop
     @@listener.read = 0
   end
   
-  def update 
+  def get_data 
     @buffer = @@buffer
     @listener = @@listener
+    @data = @buffer.full_data if @buffer
   end
   
 end

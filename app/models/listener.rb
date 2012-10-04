@@ -18,8 +18,7 @@ class Listener
   
   def listen_thread
     i = 0 
-    while @read
-      @read = 1
+    while @read == 1
       @delay = 20
       data = @input.gets
       @buffer.add(data) if data.present?

@@ -7,10 +7,12 @@ class ValueBuffer
   end  
   
   def add(input)
-    # hash = {parse(input)}
-    @array << input #hash possible
+    input = input.split(",") #separate values
+    input = input.collect{|val| val.to_i} #rewrite to integers
+    input = (input[1].to_f + input[2].to_f / 2) #calculate median, float
+    @array << input
     while @array.size > @max_array_size
-      @array.delete_at(0) #drop first packets until buffer size <= 10
+      @array.delete_at(0) #drop first packets until buffer size <= 100
     end
     return @array
   end
@@ -31,25 +33,26 @@ class ValueBuffer
     end
   end
   
-  def deriv
+  def full_data
     #treshhold
     treshhold = 150.0
     
     #init vars
     is_a_peak = false
     peak_count = 0
-    deriv = []
+    data = []
     bpm = 0
     last_peak = 0
   
-    (1..(@array.size-1)).each do |i|
+    (0..(@array.size-1)).each do |i|
+
       if @array[i-1].present?
         diff = @array[i] - @array[i-1]
-        if i >= 3
-          if (is_a_peak & ((diff+deriv[i-1][0]+deriv[i-2][0]) < -treshhold)) #if derivative drops below treshold
+        if i >= 2
+          if (is_a_peak & ((diff+data[i-1][2]+data[i-2][2]) < -treshhold)) #if derivative drops below treshold
             is_a_peak = false
           end 
-          if (!is_a_peak & ((diff+deriv[i-1][0]+deriv[i-2][0]) > treshhold)) # if derivative goes over treshhold
+          if (!is_a_peak & ((diff+data[i-1][2]+data[i-2][2]) > treshhold)) # if derivative goes over treshhold
             is_a_peak = true #set peak
             peak_count += 1 #add 1 peak to counter
             bpm = (60.0 / last_peak) #count BPM
@@ -57,11 +60,13 @@ class ValueBuffer
           end
         end
         last_peak += 0.02 # 50Hz, add 20 ms since last peak
-        deriv << [diff, is_a_peak, peak_count, bpm]
+        data << [i, @array[i], diff, is_a_peak, peak_count, bpm]
       end
+      # data.insert @array[i] # shift current sensor value from the left
+      # data.insert i # shift current hash nr. from the left
       i += 1
     end
-    return deriv
+    return data
   end
   
     
