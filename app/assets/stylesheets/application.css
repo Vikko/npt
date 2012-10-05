@@ -10,4 +10,9 @@
  *
  *= require_self
  *= require_tree .
+ *= require heart_rate
  */
+
+.clearfix{
+	clear: both;
+}

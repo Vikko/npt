@@ -1,6 +1,16 @@
 $("#data").html("<%= escape_javascript(render :partial => 'data') %>");
-<% if @listener && @listener.read %>
-polling = true;
-<% else %>
-polling = false;
+heart_rate_data = []
+<% @hr_data.each do |data_entry| %>
+	heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
+
 <% end %>
+if (delay <= 0) {
+	next = bpm_rate_data.length;
+	current_bpm = <%= @hr_data.last[5]%>;
+	current_bpm = current_bpm.toFixed(1);
+	bpm_rate_data.push([next, current_bpm]);
+	delay = 25;
+	draw_bpmrate();
+	$(".bpm-value").html(current_bpm);
+}
+delay--;

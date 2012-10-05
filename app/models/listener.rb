@@ -21,7 +21,12 @@ class Listener
     while @read == 1
       @delay = 20
       data = @input.gets
-      @buffer.add(data) if data.present?
+      if data.present?
+        prev = data
+      else 
+        data = prev
+      end
+      @buffer.add(data) 
       sleep (@delay.to_f / 1000)
       if ((i % 50) == 0)
         puts "listening to pipe for " + (i/50).to_s + " seconds."

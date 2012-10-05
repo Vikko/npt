@@ -29,7 +29,7 @@ class SensorsController < ApplicationController
   def get_data 
     @buffer = @@buffer
     @listener = @@listener
-    @data = @buffer.full_data if @buffer
+    @hr_data = @buffer.get_data if @buffer
   end
   
 end

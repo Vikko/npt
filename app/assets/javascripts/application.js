@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require jquery.flot
+//= require jquery.flot.time
+//= require heart_rate_plots
