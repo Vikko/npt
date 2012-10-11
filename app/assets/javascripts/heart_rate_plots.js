@@ -4,7 +4,7 @@ updateInterval = 200;
 heart_rate_data = [];
 bpm_rate_data = [];
 intervalId = "";
-delay = 50;
+delay = 5;
 
 //init script
 $(document).ready(function($){
