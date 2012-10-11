@@ -1,5 +1,5 @@
 // global vars & initialize vars
-polling = false;
+started = false;
 updateInterval = 20;
 heart_rate_data = [];
 bpm_rate_data = [];
