@@ -1,8 +1,9 @@
 $("#data").html("<%= escape_javascript(render :partial => 'data') %>");
 heart_rate_data = []
-<% @hr_data.each do |data_entry| %>
-	heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
-
+<% if @hr_data.present? %>
+	<% @hr_data.each do |data_entry| %>
+		heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
+	<% end %>
 <% end %>
 if (delay <= 0) {
 	next = bpm_rate_data.length;
