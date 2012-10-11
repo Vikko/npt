@@ -6,7 +6,7 @@ class SensorsController < ApplicationController
 
   def index
     if @@listener.blank? 
-      # start
+      start
     end
     get_data
   end
@@ -17,8 +17,8 @@ class SensorsController < ApplicationController
       @@buffer = @@listener.buffer    
     end
     if @@listener.read != 1
-      @@listener.listen
       @@listener.read = 1
+      @@listener.listen
     end
   end
   

@@ -1,6 +1,6 @@
 // global vars & initialize vars
 started = false;
-updateInterval = 20;
+updateInterval = 40;
 heart_rate_data = [];
 bpm_rate_data = [];
 intervalId = "";
