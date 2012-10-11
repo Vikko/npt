@@ -8,15 +8,15 @@ delay = 50;
 
 //init script
 $(document).ready(function($){
-	$("#start").click(function(e){
-		start();
-	});
-	$("#stop").click(function(e){
-		start();
-	});
 	setup_plots();
 	draw_live_heartrate();
 	draw_bpmrate();
+	$("#start").click(function(e){
+		start()
+	});
+	$("#stop").click(function(e){
+		stop();
+	});
 });
 function get_data() {
 	$.ajax({
@@ -43,7 +43,7 @@ function setup_plots() {
 }
 
 function start() {
-	if !(started) {
+	if (!(started)) {
 		started = true;
 		if (intervalId == "") {
 			intervalId = setInterval(function(){
