@@ -20,11 +20,11 @@ class ValueBuffer
     input = input.collect{|val| val.to_i} #rewrite to integers
     input = (input[1].to_f + input[2].to_f / 2) #calculate median, float
     #### debug
-    val = (@timer % 35)
-    if (val == 0 || val == 1)
-      input += 200
-    end
-    @timer += 1
+    # val = (@timer % 35)
+    # if (val == 0 || val == 1)
+    #   input += 200
+    # end
+    # @timer += 1
     ####
     if @array.size > 0
       analyse_data
