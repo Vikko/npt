@@ -37,23 +37,29 @@ function setup_plots() {
 }
 
 function start() {
-	if (intervalId == "") {
-		intervalId = setInterval(function(){
-			get_data();
-			draw_live_heartrate()
-		}, updateInterval);
-		console.log("Started updating plot");
-	} else {
-		console.log("Called start, but already started.")
+	if !(started) {
+		started = true;
+		if (intervalId == "") {
+			intervalId = setInterval(function(){
+				get_data();
+				draw_live_heartrate()
+			}, updateInterval);
+			console.log("Started updating plot");
+		} else {
+			console.log("Called start, but already started.")
+		}
 	}
 }
 
 function stop() {
-	if (intervalId == "") {
-		console.log("Called stop, but not running.")
-	} else {
-		clearInterval(intervalId);
-		intervalId = "";
+	if (started) {
+		started = false;
+		if (intervalId == "") {
+			console.log("Called stop, but not running.")
+		} else {
+			clearInterval(intervalId);
+			intervalId = "";
+		}
 	}
 }
 
