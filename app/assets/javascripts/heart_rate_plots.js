@@ -8,6 +8,12 @@ delay = 50;
 
 //init script
 $(document).ready(function($){
+	$("#start").click(function(e){
+		start();
+	});
+	$("#stop").click(function(e){
+		start();
+	});
 	setup_plots();
 	draw_live_heartrate();
 	draw_bpmrate();
