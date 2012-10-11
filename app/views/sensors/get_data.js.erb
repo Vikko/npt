@@ -1,10 +1,10 @@
-$("#data").html("<%= escape_javascript(render :partial => 'data') %>");
+// $("#data").html("<%= escape_javascript(render :partial => 'data') %>");
 heart_rate_data = []
 <% if @hr_data.present? %>
 	<% @hr_data.each do |data_entry| %>
 		heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
 	<% end %>
-<% end %>
+
 if (delay <= 0) {
 	next = bpm_rate_data.length;
 	current_bpm = <%= @hr_data.last[5]%>;
@@ -15,3 +15,4 @@ if (delay <= 0) {
 	$(".bpm-value").html(current_bpm);
 }
 delay--;
+while true ; do echo "0,$(($RANDOM % 100 + 1000)),$(($RANDOM % 100 + 1050))" | tee /tmp/pipe; sleep 0.02 ; done
