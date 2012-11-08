@@ -33,7 +33,7 @@ class SensorsController < ApplicationController
   end
   
   def post_data
-    render :json => "{'status':'ok'}"
+    render :json => {"status" => "ok"};
   end
   
 end

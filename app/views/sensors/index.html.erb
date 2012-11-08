@@ -19,4 +19,26 @@ Heart rate monitor
 <%#= link_to "Stop", {:action => :stop}, :remote => true %>
 <a id="start" href="#">Start</a>
 <a id="stop" href="#;">Stop</a>
+<br/>
+<a id="test_post" href="#">Test post action</a>
 </p>
+
+<script type="text/javascript">
+	$(document).ready(function($){
+		debug = "";
+		$("#test_post").click(function(e){
+			$.ajax({
+				url: "<%= url_for(:action => :post_data) %>",
+				type: 'POST',
+				dataType: 'json',
+			  success: function(data){
+				debug = data
+			    alert('success! \nstatus: ' + data.status);
+			  },
+			  error: function(data){
+			    alert('failure: ' + data);
+			  }
+			});
+		});
+	})
+</script>
