@@ -6,8 +6,10 @@ class SensorsController < ApplicationController
 
   def index
     if @@listener.blank? 
+      @@listener = 0
       # start
     end
+    @post_count = @@listener
     get_data
   end
 
@@ -33,6 +35,7 @@ class SensorsController < ApplicationController
   end
   
   def post_data
+    @@listener += 1
     render :json => {"status" => "ok"};
   end
   
