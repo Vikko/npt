@@ -7,6 +7,7 @@ PollingTest::Application.routes.draw do
       get :stop
       get :get_data
       post :post_data
+      get :test_json
     end
   end
   

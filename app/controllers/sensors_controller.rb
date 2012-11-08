@@ -39,4 +39,8 @@ class SensorsController < ApplicationController
     render :json => {"status" => "ok"};
   end
   
+  def test_json
+    render :json => {"status" => "ok"}
+  end
+  
 end
