@@ -32,4 +32,8 @@ class SensorsController < ApplicationController
     @hr_data = @buffer.get_data if @buffer
   end
   
+  def post_data
+    render :json => "{'status':'ok'}"
+  end
+  
 end
