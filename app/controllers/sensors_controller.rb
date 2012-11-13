@@ -11,6 +11,7 @@ class SensorsController < ApplicationController
     end
     @post_count = @@listener
     get_data
+    @logger = Textlogger.all
   end
 
   def start
@@ -36,6 +37,7 @@ class SensorsController < ApplicationController
   
   def post_data
     @@listener += 1
+    Textlogger.create(:content => "parameters: #{params.inspect}")
     render :json => {"status" => "ok"};
   end
   

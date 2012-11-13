@@ -15,10 +15,12 @@ Heart rate monitor
 </div>
 
 <p>
-<%#= link_to "Start", {:action => :start}, :remote => true %>
-<%#= link_to "Stop", {:action => :stop}, :remote => true %>
-<a id="start" href="#">Start</a>
-<a id="stop" href="#;">Stop</a>
+<!-- <a id="start" href="#">Start</a>
+<a id="stop" href="#;">Stop</a> -->
+POSTS log:<br/>
+<% @logger.each do |log_entry| %>
+	<%= log_entry.created_at %> || <%= log_entry.content %> <br/>
+<% end %>
 <br/>
 <a id="test_post" href="#">Test post action</a> <%= @post_count %>
 </p>
