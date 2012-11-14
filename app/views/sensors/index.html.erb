@@ -20,9 +20,9 @@ Heart rate monitor
 POSTS log:<br/>
 <% @logger.each do |log_entry| %>
 	<%= log_entry.created_at %> || <%= log_entry.content %> <br/>
-<% end %>
-<br/>
-<a id="test_post" href="#">Test post action</a> <%= @post_count %>
+<% end %><br/>
+<a id="test_post" href="#">Test post action</a> <%= @post_count %><br/>
+<%= link_to "Clear database", delete_all_sensors_path, :method => :post %>
 </p>
 
 <script type="text/javascript">

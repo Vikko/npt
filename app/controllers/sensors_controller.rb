@@ -45,4 +45,9 @@ class SensorsController < ApplicationController
     render :json => {"status" => "ok"}
   end
   
+  def delete_all
+    Textlogger.destroy_all
+    redirect_to :action => :index
+  end
+  
 end

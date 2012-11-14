@@ -8,6 +8,7 @@ PollingTest::Application.routes.draw do
       get :get_data
       post :post_data
       get :test_json
+      post :delete_all
     end
   end
   
