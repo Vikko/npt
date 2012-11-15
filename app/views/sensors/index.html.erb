@@ -1,6 +1,7 @@
 Heart rate monitor
 <br/>
 <div id="wrapper">
+	Buffer size: <%= @buffer.size %>
 	<div id="live_heart_rate_plot"></div>
 	<div id="bpm_rate_plot" style=""></div>
 	<div id="bpm_value" style="">
@@ -15,8 +16,8 @@ Heart rate monitor
 </div>
 
 <p>
-<!-- <a id="start" href="#">Start</a>
-<a id="stop" href="#;">Stop</a> -->
+<a id="start" href="#">Start</a>
+<a id="stop" href="#">Stop</a>
 POSTS log:<br/>
 <% @logger.each do |log_entry| %>
 	<%= log_entry.created_at %> || <%= log_entry.content %> <br/>
