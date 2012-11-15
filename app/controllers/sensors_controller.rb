@@ -35,7 +35,7 @@ class SensorsController < ApplicationController
   end
   
   def post_data
-    measure = RawMeasurement.new(:time => Time.now, :type => 1, :value1 => params[:EMG], :value2 => params[:EMG])
+    measure = RawMeasurement.new(:time => Time.now, :type => 1, :value1 => params[:AccelerometerX], :value2 => params[:AccelerometerY], :value3 => params[:AccelerometerZ])
     if measure.valid?
       measure.save
     end
