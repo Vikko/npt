@@ -28,11 +28,11 @@ class SensorsController < ApplicationController
   
   def get_data 
     @listener = @@listener
-    if @listener.hr_buffer.present?
-      @hr_data = @listener.hr_buffer.get_data
+    if @listener.hr_buffer.array.present?
+      @hr_data = @listener.hr_buffer.array
     end
-    if @listener.geo_buffer.present?
-      @latitude, @longitude = @listener.geo_buffer.get_data.last
+    if @listener.geo_buffer.array.present?
+      @latitude, @longitude = @listener.geo_buffer.array.last
     end
   end
   

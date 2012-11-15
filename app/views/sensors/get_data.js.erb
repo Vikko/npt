@@ -1,8 +1,10 @@
 // $("#data").html("<%= escape_javascript(render :partial => 'data') %>");
 heart_rate_data = []
 <% if @hr_data.present? %>
+var i = 0;
 	<% @hr_data.each do |data_entry| %>
-		heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
+		heart_rate_data.push([i, <%= data_entry%>]);
+		i++;
 	<% end %>
 <% end %>
 <% if @latitude.present? && @longitude.present? %>
