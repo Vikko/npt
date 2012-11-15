@@ -19,7 +19,7 @@ class Listener
       @delay = 500
       buffer = 5.seconds
       to = Time.now - buffer
-      from = to - (@delay/1000)
+      from = to - (@delay.to_f/1000)
       # puts(" == Getting data == ")
       data = RawMeasurement.between(from, to)
       # puts(data.inspect)
