@@ -34,6 +34,10 @@ Heart rate monitor
 <%= link_to "Clear database", delete_all_sensors_path, :method => :post %>
 </p>
 
+<div id="debug">
+	<%= @listener.inspect %><br/>
+	<%= @listener.geo_buffer.inspect %><br/>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function($){

@@ -32,7 +32,7 @@ class Listener
         elsif MUSCLETENSION
           
         elsif ACCELEROMETER
-          
+          @hr_buffer.add(entry)
         elsif GYROSCOPE
           
         elsif GEOLOCATION
