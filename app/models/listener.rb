@@ -17,9 +17,9 @@ class Listener
   def listen_thread
     while @read == 1
       @delay = 500
-      buffer = 1.seconds
+      buffer = 5.seconds
       to = Time.now - buffer
-      from = to - @delay/1000
+      from = to - (@delay/1000)
       # puts(" == Getting data == ")
       data = RawMeasurement.between(from, to)
       # puts(data.inspect)
