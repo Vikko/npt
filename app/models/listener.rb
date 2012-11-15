@@ -25,17 +25,18 @@ class Listener
       data = RawMeasurement.between(from, to)
       # puts(data.inspect)
       data.each do |entry|
-        if HEARTRATE
+        case entry.sensor_type
+        when HEARTRATE
           @hr_buffer.add(entry)
-        elsif SWEAT
+        when SWEAT
           
-        elsif MUSCLETENSION
+        when MUSCLETENSION
           
-        elsif ACCELEROMETER
+        when ACCELEROMETER
           @hr_buffer.add(entry)
-        elsif GYROSCOPE
+        when GYROSCOPE
           
-        elsif GEOLOCATION
+        when GEOLOCATION
           @geo_buffer.add(entry)
         end
       end
