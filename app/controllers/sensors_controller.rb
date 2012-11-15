@@ -32,7 +32,7 @@ class SensorsController < ApplicationController
       @hr_data = @listener.hr_buffer.get_data
     end
     if @listener.geo_buffer.present?
-      @latitude, @longitude = @listener.hr_buffer.get_data.last
+      @latitude, @longitude = @listener.geo_buffer.get_data.last
     end
   end
   
