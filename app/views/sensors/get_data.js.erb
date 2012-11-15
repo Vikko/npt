@@ -5,6 +5,8 @@ heart_rate_data = []
 		heart_rate_data.push([<%= data_entry[0] %>, <%= data_entry[1]%>]);
 	<% end %>
 <% end %>
+<% if @latitude.present? && @longitude.present? %>
+	$("#location").html("<%= j(render :partial => 'map') %>")
 
 if (delay <= 0) {
 	next = bpm_rate_data.length;

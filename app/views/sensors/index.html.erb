@@ -1,33 +1,39 @@
 Heart rate monitor
 <br/>
 <div id="wrapper">
-	Buffer size: <%= @buffer.size %>
-	<div id="live_heart_rate_plot"></div>
-	<div id="bpm_rate_plot" style=""></div>
-	<div id="bpm_value" style="">
-		<div class="header">
-			<strong>Current heartbeat</strong>
+	<div class="container">
+		<div id="live_heart_rate_plot"></div>
+		<div id="bpm_rate_plot" style=""></div>
+		<div id="bpm_value" style="">
+			<div class="header">
+				<strong>Current heartbeat</strong>
+			</div>
+			<div class="bpm-value">
+			</div>
 		</div>
-		<div class="bpm-value">
-
+		<div class="clearfix"></div>
+	</div>
+	<div class="container">
+		<div id="location">
+			<%= render :partial => "map" %>
 		</div>
 	</div>
-	<div class="clearfix"/>
+	<div class="clearfix"></div>
 </div>
-
 <p>
 <a id="start" href="#">Start</a>
 <a id="stop" href="#">Stop</a>
 <br/>
 <br/>
 <br/>
-POSTS log:<br/>
-<% @logger.each do |log_entry| %>
-	<%= log_entry.created_at %> || <%= log_entry.content %> <br/>
-<% end %><br/>
-<a id="test_post" href="#">Test post action</a> <%= @post_count %><br/>
+<!-- POSTS log:<br/>
+<%# @logger.each do |log_entry| %>
+	<%#= log_entry.created_at %> || <%#= log_entry.content %> <br/>
+<%# end %><br/>-->
+<a id="test_post" href="#">Test post action</a> <%#= @post_count %><br/>
 <%= link_to "Clear database", delete_all_sensors_path, :method => :post %>
 </p>
+
 
 <script type="text/javascript">
 	$(document).ready(function($){

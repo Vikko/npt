@@ -16,3 +16,6 @@
 .clearfix{
 	clear: both;
 }
+.container {
+	float: left;
+}

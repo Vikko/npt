@@ -5,7 +5,7 @@ class Listener
   attr_accessor :read, :delay, :buffer
   
   def initialize
-    @buffer = ValueBuffer.new
+    @hr_buffer = ValueBuffer.new(HEARTRATE)
   end
   
   def listen
@@ -19,12 +19,24 @@ class Listener
       @delay = 500
       buffer = 5.seconds
       to = Time.now - buffer
-      from = to - (@delay.to_f/1000)
+      from = to - (@delay.to_f / 1000)
       # puts(" == Getting data == ")
       data = RawMeasurement.between(from, to)
       # puts(data.inspect)
       data.each do |entry|
-        @buffer.add("0,#{entry.value1},#{entry.value2}")
+        if HEARTRATE
+          @hr_buffer.add(entry)
+        elsif SWEAT
+          
+        elsif MUSCLETENSION
+          
+        elsif ACCELEROMETER
+          
+        elsif GYROSCOPE
+          
+        elsif GEOLOCATION
+          
+        end
       end
       sleep (@delay.to_f / 1000)
       ActiveRecord::Base.verify_active_connections!() if defined? ActiveRecord

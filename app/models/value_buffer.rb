@@ -1,7 +1,7 @@
 class ValueBuffer
   attr_accessor :array, :max_buffer_size
   
-  def initialize
+  def initialize(type)
     @array = []
     @data = []
     @max_array_size = 100
@@ -10,38 +10,52 @@ class ValueBuffer
     @is_a_peak = false
     @peak_count = 0
     @last_peak = 0
-    if @array.size > 0
-      
-    end
+    @type = type
   end  
   
   def add(input)
-    input = input.split(",") #separate values
-    input = input.collect{|val| val.to_i} #rewrite to integers
-    input = (input[1].to_f + input[2].to_f / 2) #calculate median, float
-    #### debug
-    val = (@timer % 35)
-    if (val == 0 || val == 1)
-      input += 200
+    case @type
+    when GEOLOCATION
+      lat = input.value1
+      long = input.value2
+      @array << [lat.to_f, long.to_f]
+    when SWEAT
+      @array << input.value1.to_f
+    when MUSCLETENSION
+      @array << input.value1.to_f
+    when ACCELEROMETER
+      @array << ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
+    when GYROSCOPE
+      @array << [input.value1.to_f, input.value2.to_f, input.value3.to_f]
+    when HEARTRATE
+      input = ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
+      # #### debug
+      # val = (@timer % 35)
+      # if (val == 0 || val == 1)
+      #   input += 200
+      # end
+      # @timer += 1
+      # ####
+      # if @array.size > 0
+      #   analyse_data
+      # end
+      @array << input
+    else
+      # nothing
     end
-    @timer += 1
-    ####
-    if @array.size > 0
-      analyse_data
-    end
-    @array << input
     while @array.size > @max_array_size
       @array.delete_at(0) #drop first packets until buffer size <= 100
     end
     return @array
+    
   end
   
   def size
-    return @array.size
+    return @hr_array.size
   end
 
   # def dc_component
-  #   @array.inject(:+).to_f / @max_array_size
+  #   @hr_array.inject(:+).to_f / @max_array_size
   # end
   
   def get_array

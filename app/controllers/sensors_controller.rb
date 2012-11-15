@@ -35,7 +35,19 @@ class SensorsController < ApplicationController
   end
   
   def post_data
-    measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => 1, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])
+    if params["latitude"] && params["longitude"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => GEOLOCATION, :value1 => params["latitude"], :value2 => params["longitude"])
+    elsif params["GSR"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => SWEAT, :value1 => params["GSR"])
+    elsif params["EMG"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => MUSCLETENSION, :value1 => params["EMG"])
+    elsif params["AccelerometerX"] && params["AccelerometerY"] && params["AccelerometerZ"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => ACCELEROMETER, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])      
+    elsif params["GyroscopeX"] && params["GyroscopeY"] && params["GyroscopeZ"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => GYROSCOPE, :value1 => params["GyroscopeX"], :value2 => params["GyroscopeY"], :value3 => params["GyroscopeZ"])
+    elsif params["Heartrate"]
+      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
+    end
     if measure.valid?
       measure.save
     end
