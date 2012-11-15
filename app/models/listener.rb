@@ -22,7 +22,9 @@ class Listener
       to = Time.now - buffer
       from = to - 0.1
       ActiveRecord::Base.connection_pool.with_connection do 
+        puts(" == Getting data == ")
         data = RawMeasurement.between(from, to)
+        puts(data.inspect)
       end
       data.each do |entry|
         @buffer.add("0,#{entry.value1},#{entry.value2}")
