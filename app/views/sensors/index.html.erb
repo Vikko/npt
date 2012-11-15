@@ -33,6 +33,11 @@ POSTS log:<br/>
 				url: "<%= url_for(:action => :post_data) %>",
 				type: 'POST',
 				dataType: 'json',
+				data: {
+					AccelerometerX: "1911,0000",
+					AccelerometerY: "1227,0000",
+					AccelerometerZ: "1532,0000"
+				},
 			  success: function(data){
 				debug = data
 			    alert('success! \nstatus: ' + data.status);
