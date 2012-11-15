@@ -1,37 +1,44 @@
 class Listener
   
+  include Spawn
+  
   attr_accessor :read, :delay, :buffer
   
   def initialize
-    puts "Listen to Pipe starting"
-    #mkfifo /tmp/pipe
-    @input = File.open("/tmp/pipe", "r")
     @buffer = ValueBuffer.new
-    @threads = []
   end
   
   def listen
-    @threads << Thread.new do
-                  listen_thread
-                end
+    spawn_block(:method => :thread) do 
+      listen_thread
+    end
   end
   
   def listen_thread
     i = 0 
     while @read == 1
-      @delay = 20
-      data = @input.gets
-      if data.present?
-        prev = data
-      else 
-        data = prev
+      @delay = 100
+      buffer = 10.seconds
+      to = Time.now - buffer
+      from = to - 0.1
+      ActiveRecord::Base.connection_pool.with_connection do 
+        data = RawMeasurement.between(from, to)
       end
-      @buffer.add(data) 
+      data.each do |entry|
+        @buffer.add("0,#{entry.value1},#{entry.value2}")
+      end
+      # if data.present?
+      #   prev = data
+      # else 
+      #   data = prev
+      # end
+      # @buffer.add(data.) 
       sleep (@delay.to_f / 1000)
-      if ((i % 50) == 0)
-        puts "listening to pipe for " + (i/50).to_s + " seconds."
-      end
+      # if ((i % 50) == 0)
+      # puts "COUNT: #{i}"
+      # end
       i += 1
+      ActiveRecord::Base.verify_active_connections!() if defined? ActiveRecord
     end
   end
 end

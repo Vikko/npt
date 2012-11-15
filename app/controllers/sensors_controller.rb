@@ -6,10 +6,9 @@ class SensorsController < ApplicationController
 
   def index
     if @@listener.blank? 
-      @@listener = 0
-      # start
+      start
     end
-    @post_count = @@listener
+    @post_count = Textlogger.count
     get_data
     @logger = Textlogger.all
   end
@@ -36,7 +35,7 @@ class SensorsController < ApplicationController
   end
   
   def post_data
-    @@listener += 1
+    # RawMeasurement.new(:time = Time.now, :type => 1, :value1 => params[:EMG], :value2 => params[:EMG])
     Textlogger.create(:content => "parameters: #{params.inspect}")
     render :json => {"status" => "ok"};
   end

@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/rfc2822/spawn
+  revision: ca0cf371ad02f0679ad26ce5bc9c7a9337569982
+  specs:
+    spawn (1.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -129,6 +135,7 @@ DEPENDENCIES
   pg
   rails (= 3.2.8)
   sass-rails (~> 3.2.3)
+  spawn!
   sqlite3
   therubyracer
   thin

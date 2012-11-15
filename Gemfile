@@ -13,6 +13,9 @@ gem 'execjs'
 gem 'therubyracer'
 gem 'json'
 
+#threading
+gem 'spawn', :git => 'git://github.com/rfc2822/spawn'
+
 group :production do
 	gem 'thin'
 	gem 'pg'
