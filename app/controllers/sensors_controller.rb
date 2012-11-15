@@ -1,7 +1,6 @@
 class SensorsController < ApplicationController
 
   @@listener = nil
-  @@buffer = nil
   
 
   def index
@@ -15,8 +14,7 @@ class SensorsController < ApplicationController
 
   def start
     if @@listener == nil
-      @@listener = Listener.new
-      @@buffer = @@listener.buffer    
+      @@listener = Listener.new 
     end
     if @@listener.read != 1
       @@listener.read = 1
@@ -29,9 +27,13 @@ class SensorsController < ApplicationController
   end
   
   def get_data 
-    @buffer = @@buffer
     @listener = @@listener
-    @hr_data = @buffer.get_data if @buffer
+    if @listener.hr_buffer.present?
+      @hr_data = @listener.hr_buffer.get_data
+    end
+    if @listener.geo_buffer.present?
+      @latitude, @longitude = @listener.hr_buffer.get_data.last
+    end
   end
   
   def post_data

@@ -2,10 +2,11 @@ class Listener
   
   include Spawn
   
-  attr_accessor :read, :delay, :buffer
+  attr_accessor :read, :delay, :hr_buffer, :geo_buffer
   
   def initialize
     @hr_buffer = ValueBuffer.new(HEARTRATE)
+    @geo_buffer = ValueBuffer.new(GEOLOCATION)
   end
   
   def listen
@@ -35,7 +36,7 @@ class Listener
         elsif GYROSCOPE
           
         elsif GEOLOCATION
-          
+          @geo_buffer.add(entry)
         end
       end
       sleep (@delay.to_f / 1000)
