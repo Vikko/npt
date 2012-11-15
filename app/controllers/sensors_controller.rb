@@ -49,7 +49,7 @@ class SensorsController < ApplicationController
   
   def delete_all
     Textlogger.destroy_all
-    RawMeasurements.destroy_all
+    RawMeasurement.destroy_all
     redirect_to :action => :index
   end
   
