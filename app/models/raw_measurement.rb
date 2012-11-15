@@ -3,5 +3,5 @@ class RawMeasurement < ActiveRecord::Base
   
   validates_presence_of :measurement_time, :sensor_type, :value1, :value2, :value3 
   
-  scope :between, lambda {|from,to| where("measurement_time > ? AND measurement_time < ?", from, to)}
+  scope :between, lambda {|from,to| where("measurement_time > ? AND measurement_time <= ?", from, to)}
 end

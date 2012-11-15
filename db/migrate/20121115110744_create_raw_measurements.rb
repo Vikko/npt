@@ -1,7 +1,7 @@
 class CreateRawMeasurements < ActiveRecord::Migration
   def change
     create_table :raw_measurements do |t|
-      t.float :time
+      t.float :time, :limit => 53
       t.integer :type
       t.float :value1
       t.float :value2
