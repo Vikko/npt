@@ -13,7 +13,7 @@ var i = 0;
 
 if (delay <= 0) {
 	next = bpm_rate_data.length;
-	current_bpm = <%= @hr_data.present? ? @hr_data.last[5] : 0.0 %>;
+	current_bpm = 0.0 <%#= @hr_data.present? ? @hr_data.last : 0.0 %>;
 	current_bpm = current_bpm.toFixed(1);
 	bpm_rate_data.push([next, current_bpm]);
 	delay = 25;
