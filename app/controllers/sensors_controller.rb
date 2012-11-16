@@ -9,7 +9,6 @@ class SensorsController < ApplicationController
     end
     @post_count = Textlogger.count
     get_data
-    @logger = Textlogger.all
   end
 
   def start
@@ -53,7 +52,7 @@ class SensorsController < ApplicationController
     if measure.valid?
       measure.save
     end
-    Textlogger.create(:content => "parameters: #{params.inspect}")
+    # Textlogger.create(:content => "parameters: #{params.inspect}")
     render :json => {"status" => "ok"};
   end
   
