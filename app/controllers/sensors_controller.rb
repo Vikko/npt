@@ -49,7 +49,7 @@ class SensorsController < ApplicationController
     elsif params["Heartrate"]
       measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
     end
-    if measure.valid?
+    if measure.valid? && RawMeasurement.count < 10000
       measure.save
     end
     # Textlogger.create(:content => "parameters: #{params.inspect}")

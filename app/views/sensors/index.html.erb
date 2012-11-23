@@ -35,11 +35,14 @@ Heart rate monitor
 </p>
 
 <div id="debug">
+	### Debug information ### </br>
 	listener: <%= @listener.inspect %><br/>
 	buffer.get_data: <%= @listener.geo_buffer.get_data %><br/>
 	buffer.get_data.last: <%= @listener.geo_buffer.get_data.last %><br/>
-	<%= @latitude %><br/>
-	<%= @longitude %><br/>
+	Latitude: <%= @latitude %><br/>
+	Longitude: <%= @longitude %><br/>
+	<br/>
+	Rows in database: <% RawMeasurement.count %> (limit 10.000)
 </div>
 
 <script type="text/javascript">
