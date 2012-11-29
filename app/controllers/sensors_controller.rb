@@ -7,7 +7,7 @@ class SensorsController < ApplicationController
     if @@listener.blank? 
       start
     end
-    @post_count = Textlogger.count
+    # @post_count = Textlogger.count
     get_data
   end
 
