@@ -65,12 +65,11 @@ class SensorsController < ApplicationController
     if measure.valid? && RawMeasurement.count < 10000
       if measure.save
         render :json => {"saved" => true, "id" => measure.source_id};
+      else 
+        render :json => {"saved" => false, "id" => measure.source_id};
       end
-    end
-    begin
-      render :json => {"saved" => false, "id" => measure.source_id};
-    rescue
-      render :json => {"error" => "unknown"}
+    else
+        render :json => {"error" => "data not valid!"}
     end
   end
   
