@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115125751) do
+ActiveRecord::Schema.define(:version => 20121129105537) do
 
   create_table "raw_measurements", :force => true do |t|
     t.datetime "measurement_time", :limit => 53
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20121115125751) do
     t.float    "value3"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "source_id"
   end
 
   create_table "textloggers", :force => true do |t|
