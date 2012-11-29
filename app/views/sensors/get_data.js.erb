@@ -50,7 +50,7 @@ delay--;
 	<% i = 0 %>
 	// $("#accelerometer").html("<%#= j(render :partial => 'accelerometer') %>");
 	<% @accel_data.each do |data_entry| %>
-		accel_data.push([<%= i %>, <%= data_entry%>]);
+		accelero_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>
