@@ -50,22 +50,28 @@ class SensorsController < ApplicationController
   def post_data
     Rails.logger.warn("========== PARAMETERS: " + params.inspect)
     if params["latitude"] && params["longitude"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => GEOLOCATION, :value1 => params["latitude"], :value2 => params["longitude"])
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => GEOLOCATION, :value1 => params["latitude"], :value2 => params["longitude"])
     elsif params["GSR"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => SWEAT, :value1 => params["GSR"])
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => SWEAT, :value1 => params["GSR"])
     elsif params["EMG"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => MUSCLETENSION, :value1 => params["EMG"])
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => MUSCLETENSION, :value1 => params["EMG"])
     elsif params["AccelerometerX"] && params["AccelerometerY"] && params["AccelerometerZ"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => ACCELEROMETER, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])      
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => ACCELEROMETER, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])      
     elsif params["GyroscopeX"] && params["GyroscopeY"] && params["GyroscopeZ"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => GYROSCOPE, :value1 => params["GyroscopeX"], :value2 => params["GyroscopeY"], :value3 => params["GyroscopeZ"])
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => GYROSCOPE, :value1 => params["GyroscopeX"], :value2 => params["GyroscopeY"], :value3 => params["GyroscopeZ"])
     elsif params["Heartrate"]
-      measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
+      measure = RawMeasurement.new(:source_id => 1, :measurement_time => (params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
     end
     if measure.valid? && RawMeasurement.count < 10000
-      measure.save
+      if measure.save
+        render :json => {"saved" => true, "id" => measure.source_id};
+      end
     end
-    render :json => {"status" => "ok"};
+    begin
+      render :json => {"saved" => false, "id" => measure.source_id};
+    rescue
+      render :json => {"error" => "unknown"}
+    end
   end
   
   def test_json
