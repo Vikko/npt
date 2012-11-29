@@ -62,14 +62,18 @@ class SensorsController < ApplicationController
     elsif params["Heartrate"]
       measure = RawMeasurement.new(:source_id => 1, :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
     end
-    if measure.valid? && RawMeasurement.count < 10000
-      if measure.save
-        render :json => {"saved" => true, "id" => measure.source_id};
-      else 
-        render :json => {"saved" => false, "id" => measure.source_id};
+    begin 
+      if measure.valid? && RawMeasurement.count < 10000
+        if measure.save
+          render :json => {"saved" => true, "id" => measure.source_id};
+        else 
+          render :json => {"saved" => false, "id" => measure.source_id};
+        end
+      else
+        raise "Data not valid"
       end
-    else
-        render :json => {"error" => "data not valid!"}
+    rescue Exception => e
+      render :json => {"error" => "#{e.message}"}
     end
   end
   
