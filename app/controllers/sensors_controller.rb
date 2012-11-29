@@ -82,12 +82,13 @@ class SensorsController < ApplicationController
     end
     if params["AccelerometerX"] && params["AccelerometerY"] && params["AccelerometerZ"]
       measure = RawMeasurement.new(:source_id => 1, :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => ACCELEROMETER, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])      
-       if measure.valid? && RawMeasurement.count < 10000
+      if measure.valid? && RawMeasurement.count < 10000
          if measure.save
            saved << measure.source_id
          else 
            not_saved << measure.source_id
-         end      end
+         end      
+      end
     end
     if params["GyroscopeX"] && params["GyroscopeY"] && params["GyroscopeZ"]
       measure = RawMeasurement.new(:source_id => 1, :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => GYROSCOPE, :value1 => params["GyroscopeX"], :value2 => params["GyroscopeY"], :value3 => params["GyroscopeZ"])
@@ -96,7 +97,8 @@ class SensorsController < ApplicationController
           saved << measure.source_id
         else 
           not_saved << measure.source_id
-        end      end
+        end      
+      end
     end
     if params["Heartrate"]
       measure = RawMeasurement.new(:source_id => 1, :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
@@ -109,12 +111,7 @@ class SensorsController < ApplicationController
       end
     end
     begin 
-        if 
-          render :json => {"saved" => saved.to_s, "not_saved" => not_saved.to_s};
-        end
-      else
-        raise "Data not valid"
-      end
+      render :json => {"saved" => saved.to_s, "not_saved" => not_saved.to_s};
     rescue Exception => e
       render :json => {"error" => "#{e.message}"}
     end
