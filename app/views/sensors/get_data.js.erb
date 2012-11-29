@@ -22,26 +22,26 @@ delay--;
 
 /* Sweat */
 <% if @sw_data.present? %>
-
+	$("#sweat").html("<%= j(render :partial => 'sweat') %>");
 <% end %>
 
 /* Muscle tension */
 <% if @mt_data.present? %>
-
+	$("#muscle_tension").html("<%= j(render :partial => 'muscle_tension') %>");
 <% end %>
 
 /* Accelerometer */
 <% if @accel_data.present? %>
-
+	$("#accelerometer").html("<%= j(render :partial => 'accelerometer') %>");
 <% end %>
 
 /* Gyroscope */
 <% if @gyro_data.present? %>
-
+	$("#gyroscope").html("<%= j(render :partial => 'gyroscope') %>");
 <% end %>
 
 /* Geolocation */
 <% if @latitude.present? && @longitude.present? %>
-	$("#location").html("<%= j(render :partial => 'map') %>")
+	$("#geolocation").html("<%= j(render :partial => 'map') %>")
 <% end %>
 

@@ -2,22 +2,34 @@ Heart rate monitor
 <br/>
 <div id="wrapper">
 	<div class="container">
-		<%= render :partial => "heart_rate" %>
+		<div id="heart_rate">
+			<%= render :partial => "heart_rate" %>
+		</div>
 	</div>
 	<div class="container">
-		<%= render :partial => "geolocation" %>
+		<div id="geolocation">
+			<%= render :partial => "map" %>
+		</div>
 	</div><br/>
 	<div class="container">
-		<%= render :partial => "sweat" %>
+		<div id="sweat">
+			<%= render :partial => "sweat" %>
+		</div>
 	</div>
 	<div class="container">
-		<%= render :partial => "muscle_tension" %>
+		<div id="muscle_tension">
+			<%= render :partial => "muscle_tension" %>
+		</div>
 	</div><br/>
 	<div class="container">
-		<%= render :partial => "accelerometer" %>
+		<div id="accelerometer">
+			<%= render :partial => "accelerometer" %>
+		</div>
 	</div>
 	<div class="container">
-		<%= render :partial => "gyroscope" %>
+		<div id="gyroscope">
+			<%= render :partial => "gyroscope" %>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 </div>
