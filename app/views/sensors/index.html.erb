@@ -47,7 +47,7 @@ Heart rate monitor
 <%= link_to "Clear database", delete_all_sensors_path, :method => :post %>
 </p>
 
-<div id="debug">
+<div id="debug" style="display:none;">
 	### Debug information ### </br>
 	listener: <%= @listener.inspect %><br/>
 	buffer.get_data: <%= @listener.geo_buffer.get_data %><br/>
