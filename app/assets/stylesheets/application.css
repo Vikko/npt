@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require_tree .
- *= require heart_rate
+ *= require plots
  */
 
 .clearfix{

@@ -1,12 +1,9 @@
-/* Initializers */
-heart_rate_data = []
-
 /* Heart rate */
 <% if @hr_data.present? %>
-var i = 0;
+	<% i = 0 %>
 	<% @hr_data.each do |data_entry| %>
-		heart_rate_data.push([i, <%= data_entry%>]);
-		i++;
+		heart_rate_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
 	<% end %>
 <% end %>
 if (delay <= 0) {
@@ -22,26 +19,46 @@ delay--;
 
 /* Sweat */
 <% if @sw_data.present? %>
-	$("#sweat").html("<%= j(render :partial => 'sweat') %>");
+	<% i = 0 %>
+	// $("#sweat").html("<%#= j(render :partial => 'sweat') %>");
+	<% @sw_data.each do |data_entry| %>
+		sweat_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
 <% end %>
 
 /* Muscle tension */
 <% if @mt_data.present? %>
-	$("#muscle_tension").html("<%= j(render :partial => 'muscle_tension') %>");
+	<% i = 0 %>
+	// $("#muscle_tension").html("<%#= j(render :partial => 'muscle_tension') %>");
+	<% @mt_data.each do |data_entry| %>
+		muscle_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
 <% end %>
 
 /* Accelerometer */
 <% if @accel_data.present? %>
-	$("#accelerometer").html("<%= j(render :partial => 'accelerometer') %>");
+	<% i = 0 %>
+	// $("#accelerometer").html("<%#= j(render :partial => 'accelerometer') %>");
+	<% @accel_data.each do |data_entry| %>
+		accel_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
 <% end %>
 
 /* Gyroscope */
 <% if @gyro_data.present? %>
-	$("#gyroscope").html("<%= j(render :partial => 'gyroscope') %>");
+	<% i = 0 %>
+	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
+	<% @gyro_data.each do |data_entry| %>
+		gyro_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
 <% end %>
 
 /* Geolocation */
 <% if @latitude.present? && @longitude.present? %>
-	$("#geolocation").html("<%= j(render :partial => 'map') %>")
+	$("#geolocation").html("<%#= j(render :partial => 'map') %>")
 <% end %>
 
