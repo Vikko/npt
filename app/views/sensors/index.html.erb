@@ -65,13 +65,13 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {
-					AccelerometerX: "1911,1234",
-					AccelerometerY: "1227,7454",
-					AccelerometerZ: "1532,2353"
+					AccelerometerX: "1911.1234",
+					AccelerometerY: "1227.7454",
+					AccelerometerZ: "1532.2353"
 				},
 			  success: function(data){
 				debug = data
-			    alert('success! \nstatus: ' + data.status);
+			    alert('success! \nstatus: ' + data);
 			  },
 			  error: function(data){
 			    alert('failure: ' + data);
