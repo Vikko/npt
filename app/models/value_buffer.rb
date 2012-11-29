@@ -24,9 +24,9 @@ class ValueBuffer
     when MUSCLETENSION
       @array << input.value1
     when ACCELEROMETER
-      @array << ((input.value1 + input.value2 + input.value3) / 3) #calculate median, float
+      @array << ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
     when GYROSCOPE
-      @array << [input.value1, input.value2, input.value3]
+      @array << [(input.value1.to_f +  input.value2.to_f + input.value3.to_f)]
     when HEARTRATE
       input = ((input.value1 + input.value2 + input.value3) / 3) #calculate median, float
       # # #### debug
