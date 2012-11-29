@@ -128,7 +128,7 @@ function draw_muscle() {
 }
 
 function draw_accel() {
-	$.plot($("#accelerometer_plot"), [ accelero_data ], options_ac);
+	$.plot($("#accelerometer_plot"), [ accel_data ], options_ac);
 }
 
 function draw_gyro() {
