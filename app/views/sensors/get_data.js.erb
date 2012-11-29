@@ -67,6 +67,6 @@ delay--;
 
 /* Geolocation */
 <% if @latitude.present? && @longitude.present? %>
-	$("#geolocation").html("<%#= j(render :partial => 'map') %>")
+	$("#geolocation").html("<%= j(render :partial => 'map') %>")
 <% end %>
 
