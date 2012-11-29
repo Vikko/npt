@@ -1,5 +1,5 @@
 class RawMeasurement < ActiveRecord::Base
-  attr_accessible :measurement_time, :sensor_type, :value1, :value2, :value3 
+  attr_accessible :source_id, :measurement_time, :sensor_type, :value1, :value2, :value3 
     
   validates_presence_of :measurement_time, :sensor_type, :value1
   validate :value2, :presence => true, :if => Proc.new{|m| [GEOLOCATION, ACCELEROMETER, GYROSCOPE].include?(m.sensor_type)}
