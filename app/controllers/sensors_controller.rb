@@ -51,51 +51,51 @@ class SensorsController < ApplicationController
     Rails.logger.warn("========== PARAMETERS: " + params.inspect)
     not_saved = false
     if params["latitude"] && params["longitude"]
-      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => GEOLOCATION, :value1 => params["latitude"], :value2 => params["longitude"])
+      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => GEOLOCATION, :value1 => params["latitude"].to_f, :value2 => params["longitude"].to_f)
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end
+        measure.save 
+      else
+        not_saved = true
       end
     end
     if params["GSR"]
       measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => SWEAT, :value1 => params["GSR"])
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end
+        measure.save 
+      else
+        not_saved = true
       end
     end
     if params["EMG"]
       measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => MUSCLETENSION, :value1 => params["EMG"])
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end
+        measure.save 
+      else
+        not_saved = true
       end
     end
     if params["AccelerometerX"] && params["AccelerometerY"] && params["AccelerometerZ"]
       measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => ACCELEROMETER, :value1 => params["AccelerometerX"], :value2 => params["AccelerometerY"], :value3 => params["AccelerometerZ"])      
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end    
+        measure.save 
+      else
+        not_saved = true
       end
     end
     if params["GyroscopeX"] && params["GyroscopeY"] && params["GyroscopeZ"]
       measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => GYROSCOPE, :value1 => params["GyroscopeX"], :value2 => params["GyroscopeY"], :value3 => params["GyroscopeZ"])
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end    
+        measure.save 
+      else
+        not_saved = true
       end
     end
     if params["Heartrate"]
       measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
       if measure.valid? && RawMeasurement.count < 10000
-        if !measure.save
-          not_saved = true
-        end
+        measure.save 
+      else
+        not_saved = true
       end
     end
     begin 
