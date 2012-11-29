@@ -1,5 +1,7 @@
-// $("#data").html("<%= escape_javascript(render :partial => 'data') %>");
+/* Initializers */
 heart_rate_data = []
+
+/* Heart rate */
 <% if @hr_data.present? %>
 var i = 0;
 	<% @hr_data.each do |data_entry| %>
@@ -7,17 +9,39 @@ var i = 0;
 		i++;
 	<% end %>
 <% end %>
-<% if @latitude.present? && @longitude.present? %>
-	$("#location").html("<%= j(render :partial => 'map') %>")
-<% end %>
-
 if (delay <= 0) {
 	next = bpm_rate_data.length;
-	current_bpm = 0.0 <%#= @hr_data.present? ? @hr_data.last : 0.0 %>;
+	current_bpm = <%= @hr_data.present? ? @hr_data.last : 0.0 %>;
 	current_bpm = current_bpm.toFixed(1);
 	bpm_rate_data.push([next, current_bpm]);
 	delay = 25;
 	draw_bpmrate();
 	$(".bpm-value").html(current_bpm);
 }
-delay--;
+delay--; *
+
+/* Sweat */
+<% if @sw_data.present? %>
+
+<% end %>
+
+/* Muscle tension */
+<% if @mt_data.present? %>
+
+<% end %>
+
+/* Accelerometer */
+<% if @accel_data.present? %>
+
+<% end %>
+
+/* Gyroscope */
+<% if @gyro_data.present? %>
+
+<% end %>
+
+/* Geolocation */
+<% if @latitude.present? && @longitude.present? %>
+	$("#location").html("<%= j(render :partial => 'map') %>")
+<% end %>
+

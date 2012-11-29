@@ -2,10 +2,14 @@ class Listener
   
   include Spawn
   
-  attr_accessor :read, :delay, :hr_buffer, :geo_buffer
+  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer
   
   def initialize
     @hr_buffer = ValueBuffer.new(HEARTRATE)
+    @sw_buffer = ValueBuffer.new(SWEAT)
+    @mt_buffer = ValueBuffer.new(MUSCLETENSION)
+    @accel_buffer = ValueBuffer.new(ACCELEROMETER)
+    @gyro_buffer = ValueBuffer.new(GYROSCOPE)
     @geo_buffer = ValueBuffer.new(GEOLOCATION)
   end
   
@@ -29,13 +33,13 @@ class Listener
         when HEARTRATE
           @hr_buffer.add(entry)
         when SWEAT
-          
+          @sw_buffer.add(entry)
         when MUSCLETENSION
-          
+          @mt_buffer.add(entry)
         when ACCELEROMETER
-          @hr_buffer.add(entry)
+          @accel_buffer.add(entry)
         when GYROSCOPE
-          
+          @gyro_buffer.add(entry)
         when GEOLOCATION
           @geo_buffer.add(entry)
         end

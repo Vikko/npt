@@ -30,6 +30,18 @@ class SensorsController < ApplicationController
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
     end
+    if @listener.sw_buffer.array.present?
+      @sw_data = @listener.sw_buffer.array
+    end
+    if @listener.mt_buffer.array.present?
+      @mt_data = @listener.mt_buffer.array
+    end
+    if @listener.accel_buffer.array.present?
+      @accel_data = @listener.accel_buffer.array
+    end
+    if @listener.gyro_buffer.array.present?
+      @gyro_data = @listener.gyro_buffer.array
+    end
     if @listener.geo_buffer.array.present?
       @latitude, @longitude = @listener.geo_buffer.array.last
     end
@@ -52,7 +64,6 @@ class SensorsController < ApplicationController
     if measure.valid? && RawMeasurement.count < 10000
       measure.save
     end
-    # Textlogger.create(:content => "parameters: #{params.inspect}")
     render :json => {"status" => "ok"};
   end
   

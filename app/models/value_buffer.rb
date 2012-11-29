@@ -24,19 +24,18 @@ class ValueBuffer
     when MUSCLETENSION
       @array << input.value1.to_f
     when ACCELEROMETER
-      
       @array << ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
     when GYROSCOPE
       @array << [input.value1.to_f, input.value2.to_f, input.value3.to_f]
     when HEARTRATE
       input = ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
-      # #### debug
-      # val = (@timer % 35)
-      # if (val == 0 || val == 1)
-      #   input += 200
-      # end
-      # @timer += 1
-      # ####
+      # # #### debug
+      # # val = (@timer % 35)
+      # # if (val == 0 || val == 1)
+      # #   input += 200
+      # # end
+      # # @timer += 1
+      # # ####
       # if @array.size > 0
       #   analyse_data
       # end
@@ -67,7 +66,7 @@ class ValueBuffer
     end
   end
   
-  def analyse_data
+  def detect_peak
     #treshhold
     treshhold = 150.0
     
