@@ -1,6 +1,5 @@
-Heart rate monitor
-<br/>
 <div id="wrapper">
+	<h1>Me Machine live readings</h1>
 	<div class="container">
 		<div id="heart_rate">
 			<%= render :partial => "heart_rate" %>
@@ -32,13 +31,12 @@ Heart rate monitor
 		</div>
 	</div>
 	<div class="clearfix"></div>
+	<p>
+		<a id="start" href="#">Start</a>
+		<a id="stop" href="#">Stop</a>
+	</p>
 </div>
 <p>
-<a id="start" href="#">Start</a>
-<a id="stop" href="#">Stop</a>
-<br/>
-<br/>
-<br/>
 <!-- POSTS log:<br/>
 <%# @logger.each do |log_entry| %>
 	<%#= log_entry.created_at %> || <%#= log_entry.content %> <br/>
