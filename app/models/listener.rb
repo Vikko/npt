@@ -25,9 +25,7 @@ class Listener
       buffer = 1.seconds
       to = Time.now - buffer
       from = to - (@delay.to_f / 1000)
-      # puts(" == Getting data == ")
       data = RawMeasurement.between(from, to)
-      # puts(data.inspect)
       data.each do |entry|
         case entry.sensor_type
         when HEARTRATE

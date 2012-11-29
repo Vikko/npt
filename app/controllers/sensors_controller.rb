@@ -48,6 +48,7 @@ class SensorsController < ApplicationController
   end
   
   def post_data
+    Rails.logger.warn("========== PARAMETERS: " + params.inspect)
     if params["latitude"] && params["longitude"]
       measure = RawMeasurement.new(:measurement_time => Time.now, :sensor_type => GEOLOCATION, :value1 => params["latitude"], :value2 => params["longitude"])
     elsif params["GSR"]
