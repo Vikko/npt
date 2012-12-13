@@ -17,10 +17,10 @@ post_data = [];
 	<% end %>
 <% end %>
 if (delay <= 0) {
-	next = bpm_rate_data.length;
+	// next = bpm_rate_data.length;
 	current_bpm = <%= @bpm.present? ? @bpm.last : 0.0 %>;
 	current_bpm = current_bpm.toFixed(1);
-	bpm_rate_data.push([next, current_bpm]);
+	// bpm_rate_data.push([next, current_bpm]);
 	delay = 25;
 	draw_bpmrate();
 	$(".bpm-value").html(current_bpm);
