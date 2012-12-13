@@ -28,7 +28,7 @@ class ValueBuffer
     when GYROSCOPE
       @array << (input.value1.to_f +  input.value2.to_f + input.value3.to_f)
     when HEARTRATE
-      input = input.value1.to_f# + input.value2 + input.value3) / 3) #calculate median, float
+      @array << input.value1.to_f# + input.value2 + input.value3) / 3) #calculate median, float
       # #### debug
       # val = (@timer % 35)
       # if (val == 0 || val == 1)
