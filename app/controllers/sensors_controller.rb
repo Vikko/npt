@@ -45,6 +45,12 @@ class SensorsController < ApplicationController
     if @listener.geo_buffer.array.present?
       @latitude, @longitude = @listener.geo_buffer.array.last
     end
+    if @listener.peac_buffer.array.present?
+      @peak_accel_data = @listener.peac_buffer.array.last
+    end
+    if @listener.post_buffer.array.present?
+      @posture_data = @listener.post_buffer.array.last
+    end
   end
   
   def post_data
@@ -90,8 +96,32 @@ class SensorsController < ApplicationController
         not_saved = true
       end
     end
-    if params["Heartrate"]
-      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["Heartrate"])
+    if params["HEARTBIT"]
+      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => HEARTRATE, :value1 => params["HEARTBIT"])
+      if measure.valid? && RawMeasurement.count < 10000
+        measure.save 
+      else
+        not_saved = true
+      end
+    end
+    if params["RESPIRATION"]
+      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => RESPIRATION, :value1 => params["RESPIRATION"])
+      if measure.valid? && RawMeasurement.count < 10000
+        measure.save 
+      else
+        not_saved = true
+      end
+    end
+    if params["PEAKACCE"]
+      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => PEAKACCEL, :value1 => params["PEAKACCE"])
+      if measure.valid? && RawMeasurement.count < 10000
+        measure.save 
+      else
+        not_saved = true
+      end
+    end
+    if params["POSTURE"]
+      measure = RawMeasurement.new(:source_id => params["id_sensor"], :measurement_time => Time.at(params["time"].to_f / 1000), :sensor_type => POSTURE, :value1 => params["POSTURE"])
       if measure.valid? && RawMeasurement.count < 10000
         measure.save 
       else

@@ -7,6 +7,8 @@ sweat_data = [];
 muscle_data = [];
 accelero_data = [];
 gyro_data = [];
+peac_data = [];
+post_data = [];
 intervalId = "";
 delay = 5;
 
@@ -19,6 +21,8 @@ $(document).ready(function($){
 	draw_muscle();
 	draw_accel();
 	draw_gyro();
+	draw_peak_accel();
+	draw_posture();
 	$("#start").click(function(e){
 		start();
 	});
@@ -77,6 +81,20 @@ function setup_plots() {
 				color: "#FF0000", 
 				xaxis: { show: false }
     };
+  	// peakaccel
+		options_pa = {
+				series: { shadowSize: 0 },
+				yaxis: { show: false},
+				color: "#FF0000", 
+				xaxis: { show: false }
+    };
+  	// posture
+		options_po = {
+				series: { shadowSize: 0 },
+				yaxis: { show: false},
+				color: "#FF0000", 
+				xaxis: { show: false }
+    };
 
 }
 
@@ -91,6 +109,8 @@ function start() {
 				draw_muscle();
 				draw_accel();
 				draw_gyro();
+				draw_peak_accel();
+				draw_posture();
 			}, updateInterval);
 			console.log("Started updating plot");
 		} else {
@@ -133,4 +153,12 @@ function draw_accel() {
 
 function draw_gyro() {
 	$.plot($("#gyroscope_plot"), [ gyro_data ], options_gy);
+}
+
+function draw_peak_accel() {
+	$.plot($("#peak_accel_plot"), [ peac_data ], options_po);
+}
+
+function draw_posture() {
+	$.plot($("#posture_plot"), [ post_data ], options_pa);
 }

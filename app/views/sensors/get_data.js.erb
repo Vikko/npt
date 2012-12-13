@@ -5,6 +5,8 @@ sweat_data = [];
 muscle_data = [];
 accelero_data = [];
 gyro_data = [];
+peac_data = [];
+post_data = [];
 
 /* Heart rate */
 <% if @hr_data.present? %>
@@ -16,7 +18,7 @@ gyro_data = [];
 <% end %>
 if (delay <= 0) {
 	next = bpm_rate_data.length;
-	current_bpm = <%= @hr_data.present? ? @hr_data.last : 0.0 %>;
+	current_bpm = <%= @bpm.present? ? @bpm.last : 0.0 %>;
 	current_bpm = current_bpm.toFixed(1);
 	bpm_rate_data.push([next, current_bpm]);
 	delay = 25;
@@ -61,6 +63,26 @@ delay--;
 	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @gyro_data.each do |data_entry| %>
 		gyro_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
+<% end %>
+
+/* Peak acceleration */
+<% if @peak_accel_data.present? %>
+	<% i = 0 %>
+	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
+	<% @peak_accel_data.each do |data_entry| %>
+		peac_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
+<% end %>
+
+/* Posture */
+<% if @posture_data.present? %>
+	<% i = 0 %>
+	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
+	<% @posture_data.each do |data_entry| %>
+		post_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>

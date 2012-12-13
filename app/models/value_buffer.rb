@@ -7,9 +7,9 @@ class ValueBuffer
     @max_array_size = 100
     @bpm = 0
     @timer = 0
-    @is_a_peak = false
-    @peak_count = 0
-    @last_peak = 0
+    # @is_a_peak = false
+    # @peak_count = 0
+    # @last_peak = 0
     @type = type
   end  
   
@@ -28,18 +28,24 @@ class ValueBuffer
     when GYROSCOPE
       @array << (input.value1.to_f +  input.value2.to_f + input.value3.to_f)
     when HEARTRATE
-      input = ((input.value1 + input.value2 + input.value3) / 3) #calculate median, float
-      # # #### debug
-      # # val = (@timer % 35)
-      # # if (val == 0 || val == 1)
-      # #   input += 200
-      # # end
-      # # @timer += 1
-      # # ####
-      # if @array.size > 0
-      #   analyse_data
+      input = input.value1.to_f# + input.value2 + input.value3) / 3) #calculate median, float
+      # #### debug
+      # val = (@timer % 35)
+      # if (val == 0 || val == 1)
+      #   input += 200
       # end
-      @array << input
+      # @timer += 1
+      # ####
+      if @array.size > 0
+        @bpm = analyse_data
+      end
+      # @array << input
+    when RESPIRATION
+      @array << input.value1.to_f
+    when PEAKACCEL
+      @array << input.value1.to_f
+    when POSTURE
+      @array << input.value1.to_f
     else
       # nothing
     end
@@ -50,8 +56,19 @@ class ValueBuffer
     
   end
   
+  def analyse_data
+    (@array.size > 10) ? array = @array[(@array.size - 10)..@array.size] : array = @array
+    sum = 0
+    i = 0
+    array.each do |el|
+      sum += el
+      i += 1
+    end
+    return (sum / i)
+  end
+  
   def size
-    return @hr_array.size
+    return @array.size
   end
 
   # def dc_component
@@ -66,32 +83,32 @@ class ValueBuffer
     end
   end
   
-  def detect_peak
-    #treshhold
-    treshhold = 150.0
-    
-    #init vars
-    diff = 0    
-    i = (@array.size - 1) #last element
-    if @array[i-1].present?
-        diff = @array[i] - @array[i-1]
-        if i >= 2
-          if (@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) < -treshhold))) #if derivative drops below treshold
-            @is_a_peak = false #transition from peak
-          elsif (!@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) > treshhold))) # if derivative goes over treshhold
-            @is_a_peak = true #transition to peak
-            @peak_count += 1 #add 1 peak to counter
-            @bpm = (60.0 / @last_peak) #count BPM
-            @last_peak = 0 #reset peak timer
-          end
-        end
-        @last_peak += 0.02 # 50Hz, add 20 ms since last peak
-      end
-      @data << [@array[i], diff, @is_a_peak, @peak_count, @bpm]
-      while @data.size > 100
-        @data.delete_at(0)
-      end
-  end
+  # def detect_peak
+  #   #treshhold
+  #   treshhold = 150.0
+  #   
+  #   #init vars
+  #   diff = 0    
+  #   i = (@array.size - 1) #last element
+  #   if @array[i-1].present?
+  #       diff = @array[i] - @array[i-1]
+  #       if i >= 2
+  #         if (@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) < -treshhold))) #if derivative drops below treshold
+  #           @is_a_peak = false #transition from peak
+  #         elsif (!@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) > treshhold))) # if derivative goes over treshhold
+  #           @is_a_peak = true #transition to peak
+  #           @peak_count += 1 #add 1 peak to counter
+  #           @bpm = (60.0 / @last_peak) #count BPM
+  #           @last_peak = 0 #reset peak timer
+  #         end
+  #       end
+  #       @last_peak += 0.02 # 50Hz, add 20 ms since last peak
+  #     end
+  #     @data << [@array[i], diff, @is_a_peak, @peak_count, @bpm]
+  #     while @data.size > 100
+  #       @data.delete_at(0)
+  #     end
+  # end
   
   def get_data
     return_value = []
