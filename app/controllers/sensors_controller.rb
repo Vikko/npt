@@ -46,10 +46,10 @@ class SensorsController < ApplicationController
       @latitude, @longitude = @listener.geo_buffer.array.last
     end
     if @listener.peac_buffer.array.present?
-      @peak_accel_data = @listener.peac_buffer.array.last
+      @peak_accel_data = @listener.peac_buffer.array
     end
     if @listener.post_buffer.array.present?
-      @posture_data = @listener.post_buffer.array.last
+      @posture_data = @listener.post_buffer.array
     end
   end
   
