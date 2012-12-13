@@ -7,6 +7,7 @@ accelero_data = [];
 gyro_data = [];
 peac_data = [];
 post_data = [];
+resp_data = [];
 
 /* Heart rate */
 <% if @hr_data.present? %>
@@ -83,6 +84,16 @@ delay--;
 	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @posture_data.each do |data_entry| %>
 		post_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
+<% end %>
+
+/* Posture */
+<% if @respiration_data.present? %>
+	<% i = 0 %>
+	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
+	<% @respiration_data.each do |data_entry| %>
+		resp_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>

@@ -29,6 +29,7 @@ class SensorsController < ApplicationController
     @listener = @@listener
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
+      @bpm = @listener.hr_buffer.bpm
     end
     if @listener.sw_buffer.array.present?
       @sw_data = @listener.sw_buffer.array
@@ -50,6 +51,9 @@ class SensorsController < ApplicationController
     end
     if @listener.post_buffer.array.present?
       @posture_data = @listener.post_buffer.array
+    end
+    if @listener.resp_buffer.array.present?
+      @respiration_data = @listener.resp_buffer.array
     end
   end
   

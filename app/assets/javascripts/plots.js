@@ -9,6 +9,7 @@ accelero_data = [];
 gyro_data = [];
 peac_data = [];
 post_data = [];
+resp_data = [];
 intervalId = "";
 delay = 5;
 
@@ -23,6 +24,7 @@ $(document).ready(function($){
 	draw_gyro();
 	draw_peak_accel();
 	draw_posture();
+	draw_respiration();
 	$("#start").click(function(e){
 		start();
 	});
@@ -95,6 +97,13 @@ function setup_plots() {
 				color: "#FF0000", 
 				xaxis: { show: false }
     };
+  	// respiration
+		options_rs = {
+				series: { shadowSize: 0 },
+				yaxis: { show: false},
+				color: "#FF0000", 
+				xaxis: { show: false }
+    };
 
 }
 
@@ -111,6 +120,7 @@ function start() {
 				draw_gyro();
 				draw_peak_accel();
 				draw_posture();
+				draw_respiration();
 			}, updateInterval);
 			console.log("Started updating plot");
 		} else {
@@ -161,4 +171,7 @@ function draw_peak_accel() {
 
 function draw_posture() {
 	$.plot($("#posture_plot"), [ post_data ], options_pa);
+}
+function draw_respiration() {
+	$.plot($("#respiration_plot"), [ resp_data ], options_rs);
 }
