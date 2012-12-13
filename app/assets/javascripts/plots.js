@@ -2,7 +2,7 @@
 started = false;
 updateInterval = 500;
 heart_rate_data = [];
-bpm_rate_data = [];
+// bpm_rate_data = [];
 sweat_data = [];
 muscle_data = [];
 accelero_data = [];
@@ -15,7 +15,7 @@ delay = 5;
 //init script
 $(document).ready(function($){
 	setup_plots();
-	draw_live_heartrate();
+	// draw_live_heartrate();
 	draw_bpmrate();
 	draw_sweat();
 	draw_muscle();
@@ -40,12 +40,12 @@ function get_data() {
 // flot
 function setup_plots() {
   	// live heart rate
-		options_lhr = {
+		/*options_lhr = {
         series: { shadowSize: 0 },
         yaxis: { show: false},
 				color: "#FF0000", 
         xaxis: { show: false }
-    };
+    };*/
 		// beats per minute
 		options_bpm = {
 	      series: { shadowSize: 0 },
@@ -104,7 +104,7 @@ function start() {
 		if (intervalId == "") {
 			intervalId = setInterval(function(){
 				get_data();
-				draw_live_heartrate();
+				// draw_live_heartrate();
 				draw_sweat();
 				draw_muscle();
 				draw_accel();
@@ -131,12 +131,12 @@ function stop() {
 	}
 }
 
-function draw_live_heartrate() {
-	$.plot($("#live_heart_rate_plot"), [ heart_rate_data ], options_lhr);
-}
+// function draw_live_heartrate() {
+// 	$.plot($("#live_heart_rate_plot"), [ heart_rate_data ], options_lhr);
+// }
 
 function draw_bpmrate() {
-	$.plot($("#bpm_rate_plot"), [ bpm_rate_data ], options_bpm);
+	$.plot($("#bpm_rate_plot"), [ heart_rate_data ], options_bpm);
 }
 
 function draw_sweat() {
