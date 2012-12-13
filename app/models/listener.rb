@@ -2,7 +2,7 @@ class Listener
   
   include Spawn
   
-  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer, :peac_buffer, :post_buffer
+  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer
   
   def initialize
     @hr_buffer = ValueBuffer.new(HEARTRATE)
