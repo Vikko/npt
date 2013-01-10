@@ -27,6 +27,7 @@ class SensorsController < ApplicationController
   
   def get_data 
     @listener = @@listener
+    @limit = 100
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
       @bpm = @listener.hr_buffer.bpm

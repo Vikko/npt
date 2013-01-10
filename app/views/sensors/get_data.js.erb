@@ -13,20 +13,18 @@ resp_data = [];
 <% if @hr_data.present? %>
 	<% i = 0 %>
 	<% @hr_data.each do |data_entry| %>
-		heart_rate_data.push([<%= i %>, <%= data_entry%>]);
-		<% i += 1 %>
+		if (heart_rate_data.size >= <%= @limit %>){
+			heart_rate_data.shift()
+		}
+		heart_rate_data.push(<%= data_entry%>);
 	<% end %>
 <% end %>
-if (delay <= 0) {
-	// next = bpm_rate_data.length;
-	current_bpm = <%= @bpm.present? ? @bpm.last : 0.0 %>;
+/* Draw average BPM */
+<% if @bpm.present? %>
+	current_bpm = <%= @bpm %>;
 	current_bpm = current_bpm.toFixed(1);
-	// bpm_rate_data.push([next, current_bpm]);
-	delay = 25;
-	draw_bpmrate();
 	$(".bpm-value").html(current_bpm);
-}
-delay--;
+<% end %>
 
 /* Sweat */
 <% if @sw_data.present? %>

@@ -16,4 +16,24 @@
 "PEAKACCE"=>"0.04", 
 
 "action"=>"post_data", 
-"controller"=>"sensors", 
+"controller"=>"sensors"
+}
+
+================ HOSTING ====================
+Panda VPS hosting
+800 MB - ~17 euro
+1.6 GB  - ~30 euro
+
+Dikke kortingen mogelijk bij vermelden Panda VPS hosting
+
+
+================ TODO ======================
+arrays shiften met render
+faye push berichten (multiuser, fayetoken = SHA("token"+user.id))
+migrate naar panda vps test
+data representatie (niet raw?)
+RMTP protocol voor video, Red5 server
+
+================ KEUZES =======================
+panda VPS?
+posting of streaming => database of niet?, mogelijkheid om telefoon te saven en centraal db te loggen per grote packets

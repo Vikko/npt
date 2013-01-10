@@ -1,5 +1,5 @@
 class ValueBuffer
-  attr_accessor :array, :max_buffer_size, :bpm
+  attr_accessor :array, :max_array_size, :bpm
   
   def initialize(type)
     @array = []
