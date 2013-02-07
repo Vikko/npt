@@ -181,7 +181,7 @@ function draw_respiration() {
 
 function stream() {
   var client = new Faye.Client('http://memachine-push.herokuapp.com/faye');
-	faye.setHeader('Access-Control-Allow-Origin', '*');
+	client.setHeader('Access-Control-Allow-Origin', '*');
   client.subscribe("/test", function(packet) {
 		$("#data").append(packet.data.hr_data + "<br/>");
 		fill(packet.data);
