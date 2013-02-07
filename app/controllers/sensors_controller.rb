@@ -174,10 +174,10 @@ class SensorsController < ApplicationController
   
   def push_thread
     i = 0
-    client = Faye::Client.new('http://localhost:9292/faye')
+    client = Faye::Client.new('http://memachine.herokuapp.com:9292/faye')
     while @@stream
       get_data
-      geo_data = "" #render_to_string :partial => 'map'
+      geo_data = render_to_string :partial => 'map', :layout => false
       client.publish("/test", :data => {:hr_data => i.to_json, :bpm => @bpm.to_json, 
         :sw_data => @sw_data.to_json, :mt_data => @mt_data.to_json, :accel_data => @accel_data.to_json, 
         :gyro_data => @gyro_data.to_json, :geo_location => geo_data, 
