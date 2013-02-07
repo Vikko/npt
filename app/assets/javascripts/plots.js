@@ -109,7 +109,6 @@ function setup_plots() {
 
 function start() {
 	if (!(started)) {
-		alert("start");
 		started = true;
 		// if (intervalId == "") {
 		// 	intervalId = setInterval(function(){
