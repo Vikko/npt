@@ -1,3 +1,4 @@
+require 'eventmachine'
 class SensorsController < ApplicationController
 
   @@listener = nil
@@ -13,23 +14,26 @@ class SensorsController < ApplicationController
 
   def start
     if @@listener == nil
-      @@listener = Listener.new 
+      @@delay = 2000
+      @@listener = Listener.new(@@delay)
     end
     if @@listener.read != 1
       @@listener.read = 1
       @@listener.listen
+      stream
     end
   end
   
   def stop
     @@listener.read = 0
+    @@stream = false
   end
   
   def get_data 
     @listener = @@listener
-    @limit = 100
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
+      puts "@bpm = " + @bpm.inspect
       @bpm = @listener.hr_buffer.bpm
     end
     if @listener.sw_buffer.array.present?
@@ -152,6 +156,36 @@ class SensorsController < ApplicationController
     Textlogger.delete_all
     RawMeasurement.delete_all
     redirect_to :action => :index
+  end
+  
+  def stream
+    @@stream = true
+    if @@listener.blank? 
+      start
+    end
+    spawn_block(:method => :thread) do 
+      begin 
+        push_thread
+      rescue Exception => e
+        puts e.backtrace.join("\n\t")
+      end
+    end
+  end
+  
+  def push_thread
+    i = 0
+    client = Faye::Client.new('http://localhost:9292/faye')
+    while @@stream
+      get_data
+      geo_data = "" #render_to_string :partial => 'map'
+      client.publish("/test", :data => {:hr_data => i.to_json, :bpm => @bpm.to_json, 
+        :sw_data => @sw_data.to_json, :mt_data => @mt_data.to_json, :accel_data => @accel_data.to_json, 
+        :gyro_data => @gyro_data.to_json, :geo_location => geo_data, 
+        :peak_accel_data => @peak_accel_data.to_json, :posture_data => @posture_data.to_json, :respiration_data => @respiration_data.to_json})
+      sleep(@@delay.to_f / 1000)
+      puts i
+      i += 1
+    end
   end
   
 end

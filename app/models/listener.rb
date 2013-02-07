@@ -2,9 +2,11 @@ class Listener
   
   include Spawn
   
-  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer
+  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, 
+                :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer
   
-  def initialize
+  def initialize(delay)
+    @delay = delay
     @hr_buffer = ValueBuffer.new(HEARTRATE)
     @sw_buffer = ValueBuffer.new(SWEAT)
     @mt_buffer = ValueBuffer.new(MUSCLETENSION)
@@ -24,7 +26,6 @@ class Listener
   
   def listen_thread
     while @read == 1
-      @delay = 500
       buffer = 5.seconds
       to = Time.now - buffer
       from = to - (@delay.to_f / 1000)

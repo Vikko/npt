@@ -109,35 +109,39 @@ function setup_plots() {
 
 function start() {
 	if (!(started)) {
+		alert("start");
 		started = true;
-		if (intervalId == "") {
-			intervalId = setInterval(function(){
-				get_data();
-				// draw_live_heartrate();
-				draw_sweat();
-				draw_muscle();
-				draw_accel();
-				draw_gyro();
-				draw_peak_accel();
-				draw_posture();
-				draw_respiration();
-			}, updateInterval);
-			console.log("Started updating plot");
-		} else {
-			console.log("Called start, but already started.")
-		}
+		// if (intervalId == "") {
+		// 	intervalId = setInterval(function(){
+		// 		get_data();
+		// 		// draw_live_heartrate();
+		// 		draw_sweat();
+		// 		draw_muscle();
+		// 		draw_accel();
+		// 		draw_gyro();
+		// 		draw_peak_accel();
+		// 		draw_posture();
+		// 		draw_respiration();
+		// 	}, updateInterval);
+		console.log("Started updating plot");
+		// $.ajax("start");
+		stream();
+		// } else {
+		// 	console.log("Called start, but already started.")
+		// }
 	}
 }
 
 function stop() {
 	if (started) {
 		started = false;
-		if (intervalId == "") {
-			console.log("Called stop, but not running.")
-		} else {
-			clearInterval(intervalId);
-			intervalId = "";
-		}
+		// $.ajax("stop");
+		// if (intervalId == "") {
+		// 	console.log("Called stop, but not running.")
+		// } else {
+		// 	clearInterval(intervalId);
+		// 	intervalId = "";
+		// }
 	}
 }
 
@@ -174,4 +178,103 @@ function draw_posture() {
 }
 function draw_respiration() {
 	$.plot($("#respiration_plot"), [ resp_data ], options_rs);
+}
+
+function stream() {
+  var client = new Faye.Client('http://localhost:9292/faye');
+  client.subscribe("/test", function(packet) {
+		$("#data").append(packet.data.hr_data + "<br/>");
+		fill(packet.data);
+  });
+}
+
+function fill(data){
+	/* clear arrays */
+	debug = data;
+	heart_rate_data = [];
+	sweat_data = [];
+	muscle_data = [];
+	accelero_data = [];
+	gyro_data = [];
+	peac_data = [];
+	post_data = [];
+	resp_data = [];
+
+	// Heart rate
+	if ((hr_data = data.hr_data) != "null") {
+		for(i=0; i< hr_data.size; i++){
+			if (heart_rate_data.size >= 100){
+				heart_rate_data.shift()
+			}
+			heart_rate_data.push(hr_data[i]);
+		}
+	}
+	// Draw average BPM
+	if ((bpm = data.bpm) != "null") {
+		// console.log("bpm " + bpm);
+		current_bpm = bpm.toFixed(1);
+		$(".bpm-value").html(current_bpm);
+	}
+
+	// Sweat
+	if ((sw_data = data.sw_data) != "null") {
+		// console.log("sw_data " + sw_data);
+		for(i=0; i< sw_data.size; i++){
+			sweat_data.push([i, sw_data[i]]);
+		}
+	}
+
+	// Muscle tension
+	if ((mt_data = data.mt_data) != "null") {
+		// console.log("mt_data " + mt_data);
+		for(i=0; i< mt_data.size; i++){
+			muscle_data.push([i, mt_data[i]]);
+		}
+	}
+
+	// Accelerometer
+	if ((accel_data = data.accel_data) != "null") {
+		// console.log("accel_data " + accel_data);
+		for(i=0; i< accel_data.size; i++){
+			accelero_data.push([i, accel_data[i]]);
+		}
+	}
+
+	// Gyroscope
+	if ((gyr_data = data.gyro_data) != "null") {
+		// console.log("gyr_data " + gyr_data);
+		for(i=0; i< gyr_data.size; i++){
+			gyro_data.push([i, gyr_data[i]]);
+		}
+	}
+
+	// Peak acceleration
+	if ((peak_accel_data = data.peak_accel_data) != "null") {
+		// console.log("peak_accel_data " + peak_accel_data);
+		for(i=0; i< peak_accel_data.size; i++){
+			peac_data.push([i, peak_accel_data[i]]);
+		}
+	}
+
+	// Posture
+	if ((posture_data = data.posture_data) != "null") {
+		// console.log("posture_data " + posture_data);
+		for(i=0; i< posture_data.size; i++){
+			post_data.push([i, posture_data[i]]);
+		}
+	}
+
+	// Respiration
+	if ((respiration_data = data.respiration_data) != "null") {
+		// console.log("respiration_data " + respiration_data);
+		for(i=0; i< respiration_data.size; i++){
+			resp_data.push([i, respiration_data[i]]);
+		}
+	}
+
+	// Geolocation
+	if ((geo_location = data.geo_location) != "") {
+		// console.log("geo_location " + geo_location);
+		$("#geolocation").html(geo_location)
+	} 
 }

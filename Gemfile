@@ -16,6 +16,10 @@ gem 'json'
 #threading
 gem 'spawn', :git => 'git://github.com/rfc2822/spawn'
 
+#push server
+gem 'faye'
+gem 'eventmachine'
+
 group :production do
 	gem 'thin'
 	gem 'pg'
