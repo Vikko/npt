@@ -174,7 +174,7 @@ class SensorsController < ApplicationController
   
   def push_thread
     i = 0
-    client = Faye::Client.new('http://memachine.herokuapp.com:9292/faye')
+    client = Faye::Client.new('http://memachine-push.herokuapp.com/faye')
     while @@stream
       get_data
       geo_data = render_to_string :partial => 'map', :layout => false
