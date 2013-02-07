@@ -181,7 +181,7 @@ function draw_respiration() {
 }
 
 function stream() {
-  var client = new Faye.Client('http://localhost:9292/faye');
+  var client = new Faye.Client('http://memachine.herokuapp.com:9292/faye');
   client.subscribe("/test", function(packet) {
 		$("#data").append(packet.data.hr_data + "<br/>");
 		fill(packet.data);
