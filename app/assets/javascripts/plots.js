@@ -151,8 +151,7 @@ function setup_plots() {
 					min: 0,
 					max: 255
 				},
-				xaxis: { 
-					max: 100,
+				xaxis: {
 					show: false 
 				},
 	    };
