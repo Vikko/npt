@@ -25,4 +25,19 @@ class RawMeasurement < ActiveRecord::Base
       return 1
     end
   end
+  
+  def self.average_delay
+    last = self.last.id
+    sum = 0.0
+    i = 0
+    ((last > 100 ? last - 100 : 1)..last).each do |id|
+      begin
+        measure = self.select("created_at, measurement_time").find(id)
+        sum += measure.created_at.to_f - measure.measurement_time.to_f
+        i += 1
+      rescue ;
+      end
+    end
+    sum / i
+  end
 end
