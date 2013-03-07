@@ -59,6 +59,7 @@ function setup_plots() {
 					show: false 
 				}
     };
+		
   	// sweat
 		options_sw = {
 				series: { shadowSize: 0 },

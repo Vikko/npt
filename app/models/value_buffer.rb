@@ -3,6 +3,9 @@ class ValueBuffer
   
   def initialize(type)
     @array = []
+    if type == HEARTRATE
+      @array = [1,2,3,4,5,6,7]
+    end
     @max_array_size = 100
     @bpm = 0
     @timer = 0

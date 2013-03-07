@@ -20,12 +20,14 @@ eeg_current = [];
 <% if @hr_data.present? %>
 	<% i = 0 %>
 	<% @hr_data.each do |data_entry| %>
-		if (heart_rate_data.size >= <%= @limit %>){
-			heart_rate_data.shift()
-		}
-		heart_rate_data.push(<%= data_entry%>);
+		heart_rate_data.push([<%= i %>, <%= data_entry %> ]);
+		<% i += 1 %>
 	<% end %>
+	if (heart_rate_data.size >= <%= @limit %>){
+		heart_rate_data.shift()
+	}
 <% end %>
+
 /* Draw average BPM */
 <% if @bpm.present? %>
 	current_bpm = <%= @bpm %>;
