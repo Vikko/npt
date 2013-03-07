@@ -171,6 +171,7 @@ function start() {
 		if (intervalId == "") {
 			intervalId = setInterval(function(){
 				get_data();
+				draw_bpmrate();
 				draw_sweat();
 				draw_muscle();
 				draw_accel();
