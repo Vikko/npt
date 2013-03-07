@@ -2,7 +2,7 @@ class Listener
   
   include Spawn
   
-  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer
+  attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer, :eeg_buffer
   
   def initialize
     @hr_buffer = ValueBuffer.new(HEARTRATE)
@@ -14,6 +14,7 @@ class Listener
     @resp_buffer = ValueBuffer.new(RESPIRATION)
     @peac_buffer = ValueBuffer.new(PEAKACCEL)
     @post_buffer = ValueBuffer.new(POSTURE)
+    @eeg_buffer = ValueBuffer.new(EEG)
   end
   
   def listen
@@ -49,6 +50,8 @@ class Listener
           @peac_buffer.add(entry)
         when POSTURE
           @post_buffer.add(entry)
+        when EEG
+          @eeg_buffer.add(entry)
         end
       end
       sleep (@delay.to_f / 1000)

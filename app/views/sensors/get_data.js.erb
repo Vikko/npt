@@ -3,11 +3,18 @@
 heart_rate_data = [];
 sweat_data = [];
 muscle_data = [];
-accelero_data = [];
-gyro_data = [];
+accelero_data_x = [];
+accelero_data_y = [];
+accelero_data_z = [];
+gyro_data_x = [];
+gyro_data_y = [];
+gyro_data_z = [];
 peac_data = [];
 post_data = [];
 resp_data = [];
+eeg_data1 = [];
+eeg_data2 = [];
+eeg_current = [];
 
 /* Heart rate */
 <% if @hr_data.present? %>
@@ -29,7 +36,6 @@ resp_data = [];
 /* Sweat */
 <% if @sw_data.present? %>
 	<% i = 0 %>
-	// $("#sweat").html("<%#= j(render :partial => 'sweat') %>");
 	<% @sw_data.each do |data_entry| %>
 		sweat_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
@@ -39,7 +45,6 @@ resp_data = [];
 /* Muscle tension */
 <% if @mt_data.present? %>
 	<% i = 0 %>
-	// $("#muscle_tension").html("<%#= j(render :partial => 'muscle_tension') %>");
 	<% @mt_data.each do |data_entry| %>
 		muscle_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
@@ -49,9 +54,10 @@ resp_data = [];
 /* Accelerometer */
 <% if @accel_data.present? %>
 	<% i = 0 %>
-	// $("#accelerometer").html("<%#= j(render :partial => 'accelerometer') %>");
 	<% @accel_data.each do |data_entry| %>
-		accelero_data.push([<%= i %>, <%= data_entry%>]);
+		accelero_data_x.push([<%= i %>, <%= data_entry[0] %>]);
+		accelero_data_y.push([<%= i %>, <%= data_entry[1] %>]);
+		accelero_data_z.push([<%= i %>, <%= data_entry[2] %>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>
@@ -59,9 +65,10 @@ resp_data = [];
 /* Gyroscope */
 <% if @gyro_data.present? %>
 	<% i = 0 %>
-	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @gyro_data.each do |data_entry| %>
-		gyro_data.push([<%= i %>, <%= data_entry%>]);
+		gyro_data_x.push([<%= i %>, <%= data_entry[0] %>]);
+		gyro_data_y.push([<%= i %>, <%= data_entry[1] %>]);
+		gyro_data_z.push([<%= i %>, <%= data_entry[2] %>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>
@@ -69,7 +76,6 @@ resp_data = [];
 /* Peak acceleration */
 <% if @peak_accel_data.present? %>
 	<% i = 0 %>
-	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @peak_accel_data.each do |data_entry| %>
 		peac_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
@@ -79,7 +85,6 @@ resp_data = [];
 /* Posture */
 <% if @posture_data.present? %>
 	<% i = 0 %>
-	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @posture_data.each do |data_entry| %>
 		post_data.push([<%= i %>, <%= data_entry%>]);
 		<% i += 1 %>
@@ -89,9 +94,31 @@ resp_data = [];
 /* Posture */
 <% if @respiration_data.present? %>
 	<% i = 0 %>
-	// $("#gyroscope").html("<%#= j(render :partial => 'gyroscope') %>");
 	<% @respiration_data.each do |data_entry| %>
 		resp_data.push([<%= i %>, <%= data_entry%>]);
+		<% i += 1 %>
+	<% end %>
+<% end %>
+
+/* Eeg */
+<% if @eeg_data.present? %>
+	<% i = 0 %>
+	<% first = @eeg_data.first %>
+	eeg_current = 
+	    {color:"rgb(13,132,196)", data: [[1, <%= first[2] %>]]},
+	    {color:"rgb(14,140,98)", data: [[2, <%= first[3] %>]]},
+	    {color:"rgb(24,148,37)", data: [[3, <%= first[4] %>]]},
+	    {color:"rgb(105,176,17)", data: [[4, <%= first[5] %>]]},
+	    {color:"rgb(176,197,15)", data: [[5, <%= first[6] %>]]},
+	    {color:"rgb(252,207,3)", data: [[6, <%= first[7] %>]]},
+	    {color:"rgb(221,104,11)", data: [[7, <%= first[8] %>]]},
+	    {color:"rgb(201,31,22)", data: [[8, <%= first[9] %>]]}
+	;
+	
+	// eeg_current = [[1, <%= first[2] %>], [2, <%= first[3] %>], [3, <%= first[4] %>], [4, <%= first[5] %>], [5, <%= first[6] %>], [6, <%= first[7] %>], [7, <%= first[8] %>], [8, <%= first[9] %>]];
+	<% @eeg_data.each do |data_entry| %>
+		eeg_data1.push([<%= i %>, <%= data_entry[0]%>]);
+		eeg_data2.push([<%= i %>, <%= data_entry[1]%>]);
 		<% i += 1 %>
 	<% end %>
 <% end %>
