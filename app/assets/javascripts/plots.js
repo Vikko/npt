@@ -2,21 +2,26 @@
 started = false;
 updateInterval = 500;
 heart_rate_data = [];
-// bpm_rate_data = [];
 sweat_data = [];
 muscle_data = [];
-accelero_data = [];
-gyro_data = [];
+accelero_data_x = [];
+accelero_data_y = [];
+accelero_data_z = [];
+gyro_data_x = [];
+gyro_data_y = [];
+gyro_data_z = [];
 peac_data = [];
 post_data = [];
 resp_data = [];
+eeg_data1 = [];
+eeg_data2 = [];
+eeg_current = [];
 intervalId = "";
 delay = 5;
 
 //init script
 $(document).ready(function($){
 	setup_plots();
-	// draw_live_heartrate();
 	draw_bpmrate();
 	draw_sweat();
 	draw_muscle();
@@ -25,6 +30,7 @@ $(document).ready(function($){
 	draw_peak_accel();
 	draw_posture();
 	draw_respiration();
+	draw_eeg();
 	$("#start").click(function(e){
 		start();
 	});
@@ -41,112 +47,137 @@ function get_data() {
 
 // flot
 function setup_plots() {
-  	// live heart rate
-		/*options_lhr = {
-        series: { shadowSize: 0 },
-        yaxis: { show: false},
-				color: "#FF0000", 
-        xaxis: { show: false }
-    };*/
 		// beats per minute
 		options_bpm = {
 	      series: { shadowSize: 0 },
-				color: "#FF0000", 
-	      yaxis: { min: 0, max: 180 },
-	      xaxis: { show: false }
+	      yaxis: { 
+					min: 0, 
+					max: 180 
+					},
+	      xaxis: { 
+					max: 100, 
+					show: false 
+				}
     };
+		
   	// sweat
 		options_sw = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				yaxis: { 
+					min: 0,
+					show: true,
+					max: 1000,
+					},
+				xaxis: { max: 100,
+					show: false }
     };
   	// muscle tension
 		options_mt = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				yaxis: { 
+					min: -5,
+					show: true,
+					max: 5},
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// accelerometer
 		options_ac = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				yaxis: { 
+					min: 0,
+					show: false
+				},
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// gyroscope
 		options_gy = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				yaxis: { 
+					min: 0,
+					show: false
+				},
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// peakaccel
 		options_pa = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// posture
 		options_po = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// respiration
 		options_rs = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				color: "#FF0000", 
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
+		//eeg
+		options_eeg = {
+				series: { shadowSize: 0 },
+				yaxis: { show: false
+					},
+				xaxis: { 
+					max: 100,
+					show: false 
+				},
+				colors: ["rgb(255,0,0)", "rgb(100,149,237)"]
+		    };
 
+		options_eeg_current = {
+				series: {
+		      stack: 1,
+	        bars: {
+	            show: true,
+	            barWidth: 0.6,
+	            fill:1
+	        }
+				},
+				yaxis: { show: true,
+					min: 0,
+					max: 255
+				},
+				xaxis: {
+					show: false 
+				},
+	    };
 }
 
 function start() {
 	if (!(started)) {
 		started = true;
-		// if (intervalId == "") {
-		// 	intervalId = setInterval(function(){
-		// 		get_data();
-		// 		// draw_live_heartrate();
-		// 		draw_sweat();
-		// 		draw_muscle();
-		// 		draw_accel();
-		// 		draw_gyro();
-		// 		draw_peak_accel();
-		// 		draw_posture();
-		// 		draw_respiration();
-		// 	}, updateInterval);
 		console.log("Started updating plot");
-		// $.ajax("start");
 		stream();
-		// } else {
-		// 	console.log("Called start, but already started.")
-		// }
 	}
 }
 
 function stop() {
 	if (started) {
 		started = false;
-		// $.ajax("stop");
-		// if (intervalId == "") {
-		// 	console.log("Called stop, but not running.")
-		// } else {
-		// 	clearInterval(intervalId);
-		// 	intervalId = "";
-		// }
 	}
 }
-
-// function draw_live_heartrate() {
-// 	$.plot($("#live_heart_rate_plot"), [ heart_rate_data ], options_lhr);
-// }
 
 function draw_bpmrate() {
 	$.plot($("#bpm_rate_plot"), [ heart_rate_data ], options_bpm);
@@ -161,11 +192,37 @@ function draw_muscle() {
 }
 
 function draw_accel() {
-	$.plot($("#accelerometer_plot"), [ accelero_data ], options_ac);
+	$.plot($("#accelerometer_plot"), [ 
+		{
+		  data: accelero_data_x,
+			color: 'red'
+		},
+		{
+		  data: accelero_data_y,
+			color: 'blue'
+		},
+		{
+		  data: accelero_data_z,
+			color: 'yellow'
+		}
+	], options_ac);
 }
 
 function draw_gyro() {
-	$.plot($("#gyroscope_plot"), [ gyro_data ], options_gy);
+	$.plot($("#gyroscope_plot"), [ 
+		{
+		  data: gyro_data_x,
+			color: 'red'
+		},
+		{
+		  data: gyro_data_y,
+			color: 'blue'
+		},
+		{
+		  data: gyro_data_z,
+			color: 'yellow'
+		}
+	], options_gy);
 }
 
 function draw_peak_accel() {
@@ -177,6 +234,18 @@ function draw_posture() {
 }
 function draw_respiration() {
 	$.plot($("#respiration_plot"), [ resp_data ], options_rs);
+}
+
+function draw_eeg() {
+	$.plot($("#eeg_plot"), [ 
+		{
+		  data: eeg_data1
+		},
+		{
+		  data: eeg_data2
+		}
+	], options_eeg);
+	$.plot($("#eeg_current_plot"), eeg_current, options_eeg_current);
 }
 
 function stream() {
@@ -211,14 +280,12 @@ function fill(data){
 	}
 	// Draw average BPM
 	if ((bpm = data.bpm) != "null") {
-		// console.log("bpm " + bpm);
 		current_bpm = bpm.toFixed(1);
 		$(".bpm-value").html(current_bpm);
 	}
 
 	// Sweat
 	if ((sw_data = data.sw_data) != "null") {
-		// console.log("sw_data " + sw_data);
 		for(i=0; i< sw_data.size; i++){
 			sweat_data.push([i, sw_data[i]]);
 		}
@@ -226,7 +293,6 @@ function fill(data){
 
 	// Muscle tension
 	if ((mt_data = data.mt_data) != "null") {
-		// console.log("mt_data " + mt_data);
 		for(i=0; i< mt_data.size; i++){
 			muscle_data.push([i, mt_data[i]]);
 		}
@@ -234,7 +300,6 @@ function fill(data){
 
 	// Accelerometer
 	if ((accel_data = data.accel_data) != "null") {
-		// console.log("accel_data " + accel_data);
 		for(i=0; i< accel_data.size; i++){
 			accelero_data.push([i, accel_data[i]]);
 		}
@@ -242,7 +307,6 @@ function fill(data){
 
 	// Gyroscope
 	if ((gyr_data = data.gyro_data) != "null") {
-		// console.log("gyr_data " + gyr_data);
 		for(i=0; i< gyr_data.size; i++){
 			gyro_data.push([i, gyr_data[i]]);
 		}
@@ -250,7 +314,6 @@ function fill(data){
 
 	// Peak acceleration
 	if ((peak_accel_data = data.peak_accel_data) != "null") {
-		// console.log("peak_accel_data " + peak_accel_data);
 		for(i=0; i< peak_accel_data.size; i++){
 			peac_data.push([i, peak_accel_data[i]]);
 		}
@@ -258,7 +321,6 @@ function fill(data){
 
 	// Posture
 	if ((posture_data = data.posture_data) != "null") {
-		// console.log("posture_data " + posture_data);
 		for(i=0; i< posture_data.size; i++){
 			post_data.push([i, posture_data[i]]);
 		}
@@ -266,15 +328,22 @@ function fill(data){
 
 	// Respiration
 	if ((respiration_data = data.respiration_data) != "null") {
-		// console.log("respiration_data " + respiration_data);
 		for(i=0; i< respiration_data.size; i++){
 			resp_data.push([i, respiration_data[i]]);
 		}
 	}
+	
+	// Eeg
+	if ((eeg_data = data.eeg_data) != "null") {
+		for(i=0; i< eeg_data.size; i++){
+			eeg_data.push([i, eeg_data[i]]);
+		}
+	}
+	
 
 	// Geolocation
 	if ((geo_location = data.geo_location) != "") {
-		// console.log("geo_location " + geo_location);
 		$("#geolocation").html(geo_location)
 	} 
+		
 }

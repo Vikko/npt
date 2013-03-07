@@ -3,7 +3,7 @@ class Listener
   include Spawn
   
   attr_accessor :read, :delay, :hr_buffer, :sw_buffer, :mt_buffer, :accel_buffer, :gyro_buffer, 
-                :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer
+                :geo_buffer, :resp_buffer, :peac_buffer, :post_buffer, :eeg_buffer
   
   def initialize(delay)
     @delay = delay
@@ -16,6 +16,7 @@ class Listener
     @resp_buffer = ValueBuffer.new(RESPIRATION)
     @peac_buffer = ValueBuffer.new(PEAKACCEL)
     @post_buffer = ValueBuffer.new(POSTURE)
+    @eeg_buffer = ValueBuffer.new(EEG)
   end
   
   def listen
@@ -26,7 +27,8 @@ class Listener
   
   def listen_thread
     while @read == 1
-      buffer = 5.seconds
+      @delay = 500
+      buffer = (-1.8).seconds
       to = Time.now - buffer
       from = to - (@delay.to_f / 1000)
       data = RawMeasurement.between(from, to)
@@ -50,6 +52,8 @@ class Listener
           @peac_buffer.add(entry)
         when POSTURE
           @post_buffer.add(entry)
+        when EEG
+          @eeg_buffer.add(entry)
         end
       end
       sleep (@delay.to_f / 1000)

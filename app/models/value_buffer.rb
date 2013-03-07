@@ -3,13 +3,9 @@ class ValueBuffer
   
   def initialize(type)
     @array = []
-    @data = []
     @max_array_size = 100
     @bpm = 0
     @timer = 0
-    # @is_a_peak = false
-    # @peak_count = 0
-    # @last_peak = 0
     @type = type
   end  
   
@@ -24,28 +20,32 @@ class ValueBuffer
     when MUSCLETENSION
       @array << input.value1
     when ACCELEROMETER
-      @array << ((input.value1.to_f + input.value2.to_f + input.value3.to_f) / 3) #calculate median, float
+      @array << [input.value1.to_f, input.value2.to_f, input.value3.to_f]
     when GYROSCOPE
-      @array << (input.value1.to_f +  input.value2.to_f + input.value3.to_f)
+      @array << [input.value1.to_f, input.value2.to_f, input.value3.to_f]
     when HEARTRATE
-      @array << input.value1.to_f# + input.value2 + input.value3) / 3) #calculate median, float
-      # #### debug
-      # val = (@timer % 35)
-      # if (val == 0 || val == 1)
-      #   input += 200
-      # end
-      # @timer += 1
-      # ####
+      @array << input.value1.to_f
       if @array.size > 0
         @bpm = analyse_data
       end
-      # @array << input
     when RESPIRATION
       @array << input.value1.to_f
     when PEAKACCEL
       @array << input.value1.to_f
     when POSTURE
       @array << input.value1.to_f
+    when EEG
+      attention = input.value1.to_f
+      meditation = input.value2.to_f
+      delta = input.value3.to_f
+      theta = input.value4.to_f
+      lowalpha = input.value5.to_f
+      highalpha = input.value6.to_f
+      lowbeta = input.value7.to_f
+      highbeta = input.value8.to_f
+      lowgamma = input.value9.to_f
+      midgamma = input.value10.to_f
+      @array << [attention, meditation, delta, theta, lowalpha, highalpha, lowbeta, highbeta, lowgamma, midgamma]
     else
       # nothing
     end
@@ -71,10 +71,6 @@ class ValueBuffer
     return @array.size
   end
 
-  # def dc_component
-  #   @hr_array.inject(:+).to_f / @max_array_size
-  # end
-  
   def get_array
     if @array.size > 0
       return @array.delete_at(0)
@@ -83,38 +79,20 @@ class ValueBuffer
     end
   end
   
-  # def detect_peak
-  #   #treshhold
-  #   treshhold = 150.0
-  #   
-  #   #init vars
-  #   diff = 0    
-  #   i = (@array.size - 1) #last element
-  #   if @array[i-1].present?
-  #       diff = @array[i] - @array[i-1]
-  #       if i >= 2
-  #         if (@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) < -treshhold))) #if derivative drops below treshold
-  #           @is_a_peak = false #transition from peak
-  #         elsif (!@is_a_peak & (((diff+@data[i-1][1]+@data[i-2][1]) > treshhold))) # if derivative goes over treshhold
-  #           @is_a_peak = true #transition to peak
-  #           @peak_count += 1 #add 1 peak to counter
-  #           @bpm = (60.0 / @last_peak) #count BPM
-  #           @last_peak = 0 #reset peak timer
-  #         end
-  #       end
-  #       @last_peak += 0.02 # 50Hz, add 20 ms since last peak
-  #     end
-  #     @data << [@array[i], diff, @is_a_peak, @peak_count, @bpm]
-  #     while @data.size > 100
-  #       @data.delete_at(0)
-  #     end
-  # end
-  
   def get_data
     return_value = []
     i=0
-    @data.each do |data|
-      return_value << [i, data[0], data[1], data[2], data[3], data[4]]
+    size = RawMeasurement.data_size(@type)
+    @array.each do |entry|
+      if (size == 10)
+        return_value << [[i, entry[0]], [i, entry[1]], [entry[2], entry[3], entry[4], entry[5], entry[6], entry[7], entry[8], entry[9]]]
+      elsif (size == 3)
+        return_value << [[i, entry[0]], [i, entry[1]], [i, entry[2]]]
+      elsif (size == 2)
+        return_value << [entry[0], entry[1]]
+      else #(size == 1)
+        return_value << [i, entry[0]]
+      end
       i += 1
     end
     return return_value
