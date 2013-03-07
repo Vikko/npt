@@ -62,14 +62,21 @@ function setup_plots() {
   	// sweat
 		options_sw = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
+				yaxis: { 
+					min: 0,
+					show: true,
+					max: 1000,
+					},
 				xaxis: { max: 100,
 					show: false }
     };
   	// muscle tension
 		options_mt = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
+				yaxis: { 
+					min: -5,
+					show: true,
+					max: 5},
 				xaxis: { 
 					max: 100,
 					show: false 
