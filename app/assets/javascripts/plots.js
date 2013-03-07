@@ -217,5 +217,5 @@ function draw_eeg() {
 		  data: eeg_data2
 		}
 	], options_eeg);
-	$.plot($("#eeg_current_plot"), [eeg_current], options_eeg_current);
+	$.plot($("#eeg_current_plot"), eeg_current, options_eeg_current);
 }
