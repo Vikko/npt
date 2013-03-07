@@ -103,16 +103,16 @@ eeg_current = [];
 /* Eeg */
 <% if @eeg_data.present? %>
 	<% i = 0 %>
-	<% first = @eeg_data.first %>
+	<% last = @eeg_data.last %>
 	eeg_current = [
-	    {color:"rgb(13,132,196)", data: [[1, <%= first[2] %>]]},
-	    {color:"rgb(14,140,98)", data: [[2, <%= first[3] %>]]},
-	    {color:"rgb(24,148,37)", data: [[3, <%= first[4] %>]]},
-	    {color:"rgb(105,176,17)", data: [[4, <%= first[5] %>]]},
-	    {color:"rgb(176,197,15)", data: [[5, <%= first[6] %>]]},
-	    {color:"rgb(252,207,3)", data: [[6, <%= first[7] %>]]},
-	    {color:"rgb(221,104,11)", data: [[7, <%= first[8] %>]]},
-	    {color:"rgb(201,31,22)", data: [[8, <%= first[9] %>]]}
+	    {color:"rgb(13,132,196)", data: [[1, <%= last[2] %>]]},
+	    {color:"rgb(14,140,98)", data: [[2, <%= last[3] %>]]},
+	    {color:"rgb(24,148,37)", data: [[3, <%= last[4] %>]]},
+	    {color:"rgb(105,176,17)", data: [[4, <%= last[5] %>]]},
+	    {color:"rgb(176,197,15)", data: [[5, <%= last[6] %>]]},
+	    {color:"rgb(252,207,3)", data: [[6, <%= last[7] %>]]},
+	    {color:"rgb(221,104,11)", data: [[7, <%= last[8] %>]]},
+	    {color:"rgb(201,31,22)", data: [[8, <%= last[9] %>]]}
 	];
 	
 	// eeg_current = [[1, <%= first[2] %>], [2, <%= first[3] %>], [3, <%= first[4] %>], [4, <%= first[5] %>], [5, <%= first[6] %>], [6, <%= first[7] %>], [7, <%= first[8] %>], [8, <%= first[9] %>]];
