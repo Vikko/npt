@@ -50,57 +50,91 @@ function setup_plots() {
 		// beats per minute
 		options_bpm = {
 	      series: { shadowSize: 0 },
-	      yaxis: { min: 0, max: 180 },
-	      xaxis: { show: false }
+	      yaxis: { 
+					min: 0, 
+					max: 180 
+					},
+	      xaxis: { 
+					max: 100, 
+					show: false 
+				}
     };
   	// sweat
 		options_sw = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				xaxis: { show: false }
+				xaxis: { max: 100,
+					show: false }
     };
   	// muscle tension
 		options_mt = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// accelerometer
 		options_ac = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				xaxis: { show: false }
+				yaxis: { 
+					min: 0,
+					show: false
+				},
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// gyroscope
 		options_gy = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
-				xaxis: { show: false }
+				yaxis: { 
+					min: 0,
+					show: false
+				},
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// peakaccel
 		options_pa = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// posture
 		options_po = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
   	// respiration
 		options_rs = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false},
-				xaxis: { show: false }
+				xaxis: { 
+					max: 100,
+					show: false 
+				}
     };
 		//eeg
 		options_eeg = {
 				series: { shadowSize: 0 },
 				yaxis: { show: false
 					},
-				xaxis: { show: false },
+				xaxis: { 
+					max: 100,
+					show: false 
+				},
 				colors: ["rgb(255,0,0)", "rgb(100,149,237)"]
 		    };
 
@@ -117,7 +151,10 @@ function setup_plots() {
 					min: 0,
 					max: 255
 				},
-				xaxis: { show: false },
+				xaxis: { 
+					max: 100,
+					show: false 
+				},
 	    };
 }
 
