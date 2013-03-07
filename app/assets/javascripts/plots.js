@@ -98,23 +98,26 @@ function setup_plots() {
 		//eeg
 		options_eeg = {
 				series: { shadowSize: 0 },
-				yaxis: { show: false},
+				yaxis: { show: false
+					},
 				xaxis: { show: false },
 				colors: ["rgb(255,0,0)", "rgb(100,149,237)"]
 		    };
 
 		options_eeg_current = {
 				series: {
-					        stack: 1,
-					        bars: {
-					            show: true,
-					            barWidth: 0.6,
-					            fill:1
-					        }
-        },
-				
-        yaxes: { show: false },
-        xaxis: { show: false }
+		      stack: 1,
+	        bars: {
+	            show: true,
+	            barWidth: 0.6,
+	            fill:1
+	        }
+				},
+				yaxis: { show: true,
+					min: 0,
+					max: 255
+				},
+				xaxis: { show: false },
 	    };
 }
 
