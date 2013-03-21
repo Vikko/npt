@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 group :development do
 	gem 'sqlite3'
+	gem 'debugger'
 end
 
 gem 'execjs'
@@ -17,8 +18,9 @@ gem 'json'
 gem 'spawn', :git => 'git://github.com/rfc2822/spawn'
 
 group :production do
-	gem 'thin'
-	gem 'pg'
+  gem 'mysql2'
+  # gem 'thin'
+  # gem 'pg'
 end
 
 # Gems used only for assets and not required
@@ -48,4 +50,4 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+
