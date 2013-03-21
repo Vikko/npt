@@ -1,8 +1,5 @@
 class SensorsController < ApplicationController
 
-  @@listener = nil
-  
-
   def index
     if @@listener.blank? 
       start
@@ -11,7 +8,7 @@ class SensorsController < ApplicationController
   end
 
   def start
-    if @@listener == nil
+    if @@listener.blank?
       @@listener = Listener.new 
     end
     if @@listener.read != 1
