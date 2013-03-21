@@ -1,30 +1,30 @@
 class SensorsController < ApplicationController
   
-  LISTENER = nil
+  $listener = nil
   
   def index
-    if LISTENER == nil
+    if $listener == nil
       start
     end
     get_data
   end
 
   def start
-    if LISTENER == nil
-      LISTENER = Listener.new 
+    if $listener == nil
+      $listener = Listener.new 
     end
-    if LISTENER.read != 1
-      LISTENER.read = 1
-      LISTENER.listen
+    if $listener.read != 1
+      $listener.read = 1
+      $listener.listen
     end
   end
   
   def stop
-    LISTENER.read = 0
+    $listener.read = 0
   end
   
   def get_data 
-    @listener = LISTENER
+    @listener = $listener
     @limit = 100
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
