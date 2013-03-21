@@ -24,7 +24,7 @@ class Listener
   end
   
   def listen_thread(listener)
-    while @read == 1 && listener #keep listener active
+    while @read == 1 && defined?(listener) #keep listener active
       @delay = 500
       buffer = (1).seconds
       to = Time.now - buffer
