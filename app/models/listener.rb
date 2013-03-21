@@ -18,9 +18,9 @@ class Listener
   end
   
   def listen
-    # spawn_block(:method => :thread) do 
+    spawn_block(:method => :thread) do 
       listen_thread
-    # end
+    end
   end
   
   def listen_thread

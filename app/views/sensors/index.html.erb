@@ -79,6 +79,18 @@
 	Longitude: <%= @longitude %><br/>
 	<br/>
 	Rows in database: <%= RawMeasurement.count %> (limit 10.000)
+	<%= Thread.main[:listener]%><br/>
+	===<br/>
+	<%= Thread.main[:hr_buffer]%><br/>
+	<%= Thread.main[:sw_buffer]%><br/>
+	<%= Thread.main[:mt_buffer]%><br/>
+  <%= Thread.main[:accel_buffer]%><br/>
+  <%= Thread.main[:gyro_buffer]%><br/>
+  <%= Thread.main[:geo_buffer]%><br/>
+  <%= Thread.main[:resp_buffer]%><br/>
+  <%= Thread.main[:peac_buffer]%><br/>
+  <%= Thread.main[:post_buffer]%><br/>
+  <%= Thread.main[:eeg_buffer]%><br/>
 </div>
 
 <script type="text/javascript">
