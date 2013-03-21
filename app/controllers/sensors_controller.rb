@@ -1,5 +1,7 @@
 class SensorsController < ApplicationController
 
+  @@listener = nil
+  
   def index
     if @@listener.blank? 
       start
