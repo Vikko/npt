@@ -11,7 +11,7 @@ group :development do
 end
 
 gem 'execjs'
-gem 'therubyracer'
+# gem 'therubyracer'
 gem 'json'
 
 #threading
