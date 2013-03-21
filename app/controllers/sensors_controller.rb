@@ -1,14 +1,14 @@
 class SensorsController < ApplicationController
     
   def index
-    unless defined?(Thread.main[:listener])
+    unless Thread.main[:listener].class == Listener
       start
     end
     get_data
   end
 
   def start
-    unless defined?(Thread.main[:listener])
+    unless Thread.main[:listener].class == Listener
       Thread.main[:listener] = Listener.new 
     end
     listener = Thread.main[:listener]
