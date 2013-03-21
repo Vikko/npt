@@ -5,76 +5,77 @@ class Listener
   attr_accessor :read, :delay
   
   def initialize
-    unless Rails.cache[:hr_buffer].present?
-      Rails.cache[:hr_buffer] = ValueBuffer.new(HEARTRATE)
+    @delay = 500
+    unless Rails.cache.read(:hr_buffer).present?
+      Rails.cache.write(:hr_buffer, ValueBuffer.new(HEARTRATE), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:sw_buffer].present?
-      Rails.cache[:sw_buffer] = ValueBuffer.new(SWEAT)
+    unless Rails.cache.read(:sw_buffer).present?
+      Rails.cache.write(:sw_buffer, ValueBuffer.new(SWEAT), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:mt_buffer].present?
-      Rails.cache[:mt_buffer] = ValueBuffer.new(MUSCLETENSION)
+    unless Rails.cache.read(:mt_buffer).present?
+      Rails.cache.write(:mt_buffer, ValueBuffer.new(MUSCLETENSION), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:accel_buffer].present?
-      Rails.cache[:accel_buffer] = ValueBuffer.new(ACCELEROMETER)
+    unless Rails.cache.read(:accel_buffer).present?
+      Rails.cache.write(:accel_buffer, ValueBuffer.new(ACCELEROMETER), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:gyro_buffer].present?
-      Rails.cache[:gyro_buffer] = ValueBuffer.new(GYROSCOPE)
+    unless Rails.cache.read(:gyro_buffer).present?
+      Rails.cache.write(:gyro_buffer, ValueBuffer.new(GYROSCOPE), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:geo_buffer].present?
-      Rails.cache[:geo_buffer] = ValueBuffer.new(GEOLOCATION)
+    unless Rails.cache.read(:geo_buffer).present?
+      Rails.cache.write(:geo_buffer, ValueBuffer.new(GEOLOCATION), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:resp_buffer].present?
-      Rails.cache[:resp_buffer] = ValueBuffer.new(RESPIRATION)
+    unless Rails.cache.read(:resp_buffer).present?
+      Rails.cache.write(:resp_buffer, ValueBuffer.new(RESPIRATION), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:peac_buffer].present?
-      Rails.cache[:peac_buffer] = ValueBuffer.new(PEAKACCEL)
+    unless Rails.cache.read(:peac_buffer).present?
+      Rails.cache.write(:peac_buffer, ValueBuffer.new(PEAKACCEL), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:post_buffer].present?
-      Rails.cache[:post_buffer] = ValueBuffer.new(POSTURE)
+    unless Rails.cache.read(:post_buffer).present?
+      Rails.cache.write(:post_buffer, ValueBuffer.new(POSTURE), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
-    unless Rails.cache[:eeg_buffer].present?
-      Rails.cache[:eeg_buffer] = ValueBuffer.new(EEG)
+    unless Rails.cache.read(:eeg_buffer).present?
+      Rails.cache.write(:eeg_buffer, ValueBuffer.new(EEG), :time_to_idle => 1.day, :timeToLive => 1.day)
     end
   end
   
   def hr_buffer
-    Rails.cache[:hr_buffer]
+    Rails.cache.read(:hr_buffer)
   end
   
   def sw_buffer
-    Rails.cache[:sw_buffer]
+    Rails.cache.read(:sw_buffer)
   end
   
   def mt_buffer
-    Rails.cache[:mt_buffer]
+    Rails.cache.read(:mt_buffer)
   end
   
   def accel_buffer
-    Rails.cache[:accel_buffer]
+    Rails.cache.read(:accel_buffer)
   end
   
   def gyro_buffer
-    Rails.cache[:gyro_buffer]
+    Rails.cache.read(:gyro_buffer)
   end
   
   def geo_buffer
-    Rails.cache[:geo_buffer]
+    Rails.cache.read(:geo_buffer)
   end
   
   def resp_buffer
-    Rails.cache[:resp_buffer]
+    Rails.cache.read(:resp_buffer)
   end
   
   def peac_buffer
-    Rails.cache[:peac_buffer]
+    Rails.cache.read(:peac_buffer)
   end
   
   def post_buffer
-    Rails.cache[:post_buffer]
+    Rails.cache.read(:post_buffer)
   end
   
   def eeg_buffer
-    Rails.cache[:eeg_buffer]
+    Rails.cache.read(:eeg_buffer)
   end
   
   def listen
@@ -93,25 +94,25 @@ class Listener
       data.each do |entry|
         case entry.sensor_type
         when HEARTRATE
-          Rails.cache[:hr_buffer].add(entry)
+          Rails.cache.read(:hr_buffer).add(entry)
         when SWEAT
-          Rails.cache[:sw_buffer].add(entry)
+          Rails.cache.read(:sw_buffer).add(entry)
         when MUSCLETENSION
-          Rails.cache[:mt_buffer].add(entry)
+          Rails.cache.read(:mt_buffer).add(entry)
         when ACCELEROMETER
-          Rails.cache[:accel_buffer].add(entry)
+          Rails.cache.read(:accel_buffer).add(entry)
         when GYROSCOPE
-          Rails.cache[:gyro_buffer].add(entry)
+          Rails.cache.read(:gyro_buffer).add(entry)
         when GEOLOCATION
-          Rails.cache[:geo_buffer].add(entry)
+          Rails.cache.read(:geo_buffer).add(entry)
         when RESPIRATION
-          Rails.cache[:resp_buffer].add(entry)
+          Rails.cache.read(:resp_buffer).add(entry)
         when PEAKACCEL
-          Rails.cache[:peac_buffer].add(entry)
+          Rails.cache.read(:peac_buffer).add(entry)
         when POSTURE
-          Rails.cache[:post_buffer].add(entry)
+          Rails.cache.read(:post_buffer).add(entry)
         when EEG
-          Rails.cache[:eeg_buffer].add(entry)
+          Rails.cache.read(:eeg_buffer).add(entry)
         end
       end
       sleep (@delay.to_f / 1000)
