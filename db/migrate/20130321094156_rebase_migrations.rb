@@ -12,7 +12,7 @@ class RebaseMigrations < ActiveRecord::Migration
   #
   # It's strongly recommended to check this file into your version control system.
     create_table "raw_measurements", :force => true do |t|
-      t.datetime "measurement_time", :limit => 53
+      t.datetime "measurement_time"
       t.integer  "sensor_type"
       t.float    "value1"
       t.float    "value2"
