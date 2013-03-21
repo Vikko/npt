@@ -1,29 +1,30 @@
 class SensorsController < ApplicationController
     
   def index
-    unless defined?(@@listener)
+    unless defined?(Thread.main[:listener])
       start
     end
     get_data
   end
 
   def start
-    unless defined?(@@listener)
-      @@listener = Listener.new 
+    unless defined?(Thread.main[:listener])
+      Thread.main[:listener] = Listener.new 
     end
-    if @@listener.read != 1
-      @@listener.read = 1
-      @@listener.listen
+    listener = Thread.main[:listener]
+    if listener.read != 1
+      listener.read = 1
+      listener.listen
     end
   end
   
   def stop
-    @@listener.read = 0
+    listener = Thread.main[:listener]
+    listener.read = 0
   end
   
-  def get_data 
-    
-    @listener = @@listener
+  def get_data   
+    @listener = Thread.main[:listener]
     @limit = 100
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
