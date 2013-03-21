@@ -1,28 +1,30 @@
 class SensorsController < ApplicationController
   
+  LISTENER = nil
+  
   def index
-    if Thread.main[:listener] == nil
+    if LISTENER == nil
       start
     end
     get_data
   end
 
   def start
-    if Thread.main[:listener] == nil
-      Thread.main[:listener] = Listener.new 
+    if LISTENER == nil
+      LISTENER = Listener.new 
     end
-    if Thread.main[:listener].read != 1
-      Thread.main[:listener].read = 1
-      Thread.main[:listener].listen
+    if LISTENER.read != 1
+      LISTENER.read = 1
+      LISTENER.listen
     end
   end
   
   def stop
-    Thread.main[:listener].read = 0
+    LISTENER.read = 0
   end
   
   def get_data 
-    @listener = Thread.main[:listener]
+    @listener = LISTENER
     @limit = 100
     if @listener.hr_buffer.array.present?
       @hr_data = @listener.hr_buffer.array
