@@ -1,9 +1,7 @@
 class SensorsController < ApplicationController
     
   def index
-    unless Thread.main[:listener].class == Listener
-      start
-    end
+    start
     get_data
   end
 
